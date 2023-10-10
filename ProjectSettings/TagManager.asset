@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Drop
+  - Wall
+  - Enemy
+  - Teleport
+  - Level
+  - BeltLeft
+  - BeltRight
+  - Platform
+  - Zipline
+  - ZiplinePoint
+  - KillPoint
+  - Deadly
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Through
+  - Object
+  - Floor
+  - Wall
+  - Enemy
+  - Foreground
+  - Conveyor
+  - Platform
+  - Zipline
+  - DeadlyItems
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

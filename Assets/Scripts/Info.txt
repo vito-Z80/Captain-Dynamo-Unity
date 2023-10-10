@@ -1,0 +1,32 @@
+﻿
+
+/////////////   Enemy
+/////////////   Drop
+/////////////   Drop
+
+
+
+
+
+
+
+/////////   Jump
+
+
+on jump up =        can press space key
+on jump down =      can press space key
+on ground =         can press space key
+on fall =           space key ignored
+
+
+
+
+//////// Physics:
+
+
+    Mass:                   Масса тела.
+    Drag:                   Спопротивление среды.
+    Angular drag:           
+    Use gravity:
+    Interpolate:            Интерполирует расчет физики при заниженным FPS.
+    Collision detection:    Continues: юзает лучи. При большой скорости тонкая стена не будет преодалена.
