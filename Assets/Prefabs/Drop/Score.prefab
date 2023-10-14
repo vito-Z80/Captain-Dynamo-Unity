@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: -3383453457294022211}
   - component: {fileID: 6966784231120109534}
   - component: {fileID: -8139691234455961309}
+  - component: {fileID: 852215876903606832}
+  - component: {fileID: 1580173438715394419}
+  - component: {fileID: 1304846748430098531}
   m_Layer: 7
   m_Name: Score
   m_TagString: Drop
@@ -32,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &-3383453457294022211
 SpriteRenderer:
@@ -155,3 +158,42 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 12, y: 12}
   m_EdgeRadius: 0
+--- !u!114 &852215876903606832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303481923053768304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b74be6011a94af0bc2a3a92bed03dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: 10164e849c816bc4cbdcd4952126751f, type: 2}
+--- !u!114 &1580173438715394419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303481923053768304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d0c66972aa420a861d5e86eb8ed20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemScores: 500
+--- !u!114 &1304846748430098531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303481923053768304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 957d4fb32bf84a62aaf849a98a74bf4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreAnimation: {fileID: 472870724458534562, guid: 0d1117b3e789bb44f9785c2f1a54500c, type: 3}

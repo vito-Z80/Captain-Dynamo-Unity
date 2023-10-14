@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e09d82014347a1ab77c1584df52fd5, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  diamondsOnLevel: 80
+  diamondsCollected: 0
+  scores: 0
+  currentLevel: 0
+  hasDiamondUpdate: 0
+  hasScoresUpdate: 0
+  hasLevelUpdate: 1

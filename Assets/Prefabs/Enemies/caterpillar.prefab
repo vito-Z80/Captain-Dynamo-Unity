@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7701472644793109451}
   - component: {fileID: 3778334557659754348}
   - component: {fileID: 1842613586204054788}
+  - component: {fileID: 2606892612689576327}
+  - component: {fileID: 1000571337039914021}
   m_Layer: 10
   m_Name: caterpillar
   m_TagString: Enemy
@@ -33,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4619216979156967023
 SpriteRenderer:
@@ -173,3 +175,30 @@ MonoBehaviour:
   offset: 128
   direction: 0
   step: {x: 0.33333334, y: 0, z: 0}
+  gameData: {fileID: 11400000, guid: 10164e849c816bc4cbdcd4952126751f, type: 2}
+--- !u!114 &2606892612689576327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6816812077271893027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d0c66972aa420a861d5e86eb8ed20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemScores: 1000
+--- !u!114 &1000571337039914021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6816812077271893027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 957d4fb32bf84a62aaf849a98a74bf4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreAnimation: {fileID: 1101116329769946320, guid: e368d4596939a9b41975c3e4897f6750, type: 3}

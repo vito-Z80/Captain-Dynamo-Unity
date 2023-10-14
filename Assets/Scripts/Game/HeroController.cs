@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Animations;
 using Camera;
 using Game.Actions;
-using Game.Enemies;
+using Game.Drops;
 using Game.Platforms;
 using UnityEngine;
+using UnityEngine.Serialization;
 using AnimationState = Animations.AnimationState;
 
 namespace Game
@@ -16,7 +18,7 @@ namespace Game
         public Rigidbody2D _rb;
         private BoxCollider2D _bc;
         private AnimationState _animationState;
-        private bool _isJumping = false;
+        [FormerlySerializedAs("_isJumping")] public bool isJumping = false;
         [HideInInspector] public float direction = 0.0f;
         private bool _onZipline = false;
         private bool _isDead = false;
@@ -25,30 +27,51 @@ namespace Game
         private const float JumpForce = 50f;
         private Vector2 _additionalSpeedFactor = Vector2.zero;
         private Vector3 _afterDeadPosition = Vector3.zero; //  позиция достигнув которою труп игрока вызывает respawn
+        private Vector3 _deathPosition = Vector3.zero; //  позиция смерти для определения респавна.
+
+
+        private readonly HeroHandler _heroHandler = new HeroHandler();
+        //
+        
 
         [HideInInspector] public bool isActive = false;
 
         //
-        public CameraController camera;
-        public GameObject respawnPoints;
-        public TeleportController teleport;
+
+        // public CameraController _gameCamera;
+
+        // public GameController gameController;
+
+
+        public CameraController cam;
+        
+        public LevelController levelController;
+
+        // private GameObject _respawnPoints;
+        // private TeleportController _teleport;
         public float speed = 60.0f;
 
 
-        private List<Vector3> _respawnPointsList = new List<Vector3>();
+        // private List<Vector3> _respawnPointsList = new List<Vector3>();
 
-        private void Awake()
+        private void Start()
         {
+            
+            // _cam = gameController.cameraController;
+            // _respawnPoints = levelController.respawnPoints;
+            // _teleport = levelController.teleportController;
+            // _respawnPointsList = _respawnPoints.GetComponentsInChildren<Transform>().Select(t => t.position)
+            //     .OrderBy(pos => pos.y).ToList();
+            // _respawnPointsList.Remove(_respawnPoints.transform.position);
+            // _respawnPoints.SetActive(false);
+
             _animationState = AnimationState.Idle;
             _rb = GetComponent<Rigidbody2D>();
             _bc = GetComponent<BoxCollider2D>();
             animationSprite = GetComponent<AnimationSprite>();
-            _respawnPointsList = respawnPoints.GetComponentsInChildren<Transform>().Select(t => t.position)
-                .OrderBy(pos => pos.y).ToList();
-            _respawnPointsList.Remove(respawnPoints.transform.position);
-            respawnPoints.SetActive(false);
+
             Respawn();
-            teleport.StartLevel(this);
+            levelController.teleportController.StartLevel(this);
         }
 
         private void Update()
@@ -56,22 +79,8 @@ namespace Game
             if (_isDead || !isActive) return;
             ControlledJump(JumpForce);
             Animation();
-            LevelCompleted();
+            // LevelCompleted();
         }
-
-        private void LevelCompleted()
-        {
-            if (teleport.OnLevelCompleted(this))
-            {
-                isActive = false;
-                transform.position = teleport.finishArea.center;
-                animationSprite.SetState(AnimationState.Idle);
-                _rb.velocity = Vector3.zero;
-                _rb.MovePosition(teleport.finishArea.center);
-                teleport.FinishLevel(this);
-            }
-        }
-
 
         private void FixedUpdate()
         {
@@ -89,6 +98,15 @@ namespace Game
             }
         }
 
+        public void LevelCompleted(Vector3 lastPosition)
+        {
+            isActive = false;
+            animationSprite.SetState(AnimationState.Idle);
+            transform.position = lastPosition + Vector3.up * 16.0f;
+            _rb.velocity = Vector3.zero;
+            _rb.MovePosition(levelController.teleportController.finishArea.center);
+            levelController.teleportController.FinishLevel(this);
+        }
 
         private void Animation()
         {
@@ -107,7 +125,7 @@ namespace Game
                     break;
             }
 
-            if (_isJumping) _animationState = AnimationState.JumpUp;
+            if (isJumping) _animationState = AnimationState.JumpUp;
 
             if (_onZipline) _animationState = AnimationState.Zipline;
             if (_isDead) _animationState = AnimationState.Dead;
@@ -156,31 +174,23 @@ namespace Game
 
         public void Jump(float jumpForce)
         {
-            _isJumping = true;
+            isJumping = true;
             var value = Mathf.Sqrt(2f * jumpForce * Mathf.Abs(Physics2D.gravity.y) * _rb.gravityScale) * _rb.mass;
             _rb.AddForce((Vector2.up * value), ForceMode2D.Impulse);
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.CompareTag("Ground"))
-            {
-                _isJumping = false;
-            }
-        }
 
-
-        private void Dead()
+        public void Dead()
         {
             _isDead = true;
             _rb.velocity = Vector2.zero;
             _bc.enabled = false;
             Jump(64.0f);
-            camera.isBlocked = true;
+            cam.isBlocked = true;
             _animationState = AnimationState.Dead;
             animationSprite.SetState(_animationState);
-            _afterDeadPosition = transform.position + Vector3.down * (camera.ppc.refResolutionY / 2f);
-            CheckRespawnPosition();
+            _deathPosition = transform.position;
+            _afterDeadPosition = _deathPosition + Vector3.down * (cam.ppc.refResolutionY / 2f);
         }
 
         private void Respawn()
@@ -188,55 +198,26 @@ namespace Game
             _rb.velocity = Vector2.zero;
             _animationState = AnimationState.Idle;
             _isDead = false;
-            _isJumping = false;
+            isJumping = false;
             _bc.enabled = true;
-            camera.isBlocked = false;
-            camera.horizontal = false;
-            camera.vertical = true;
-            transform.position = _respawnPointsList[0];
-            camera.transform.position = Vector3.back * 10.0f + Vector3.up * transform.position.y;
+            cam.isBlocked = false;
+            cam.horizontal = false;
+            cam.vertical = true;
+            transform.position = levelController.GetRespawnPosition(_deathPosition);
+            cam.transform.position = Vector3.back * 10.0f + Vector3.up * transform.position.y;
         }
-
-        private void CheckRespawnPosition()
+        
+        
+        
+        
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (_respawnPointsList.Count == 1) return;
-            if (transform.position.y > _respawnPointsList[1].y) _respawnPointsList.RemoveAt(0);
+            _heroHandler.OnCollision(this, collision);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag("Enemy"))
-            {
-                if (_rb.velocity.y < 0.0f)
-                {
-                    other.GetComponent<IDeath>().ToKill();
-                    _rb.velocity = new Vector2(_rb.velocity.x, 0.0f);
-                    Jump(24.0f);
-                }
-                else
-                {
-                    Dead();
-                }
-            }
-
-            //
-            if (other.gameObject.CompareTag("Deadly"))
-            {
-                Dead();
-            }
-
-            if (other.gameObject.CompareTag("Drop"))
-            {
-                if (other.name.Contains("Diamond"))
-                {
-                    Destroy(other.gameObject);
-                }
-
-                if (other.name.Contains("Score"))
-                {
-                    Destroy(other.gameObject);
-                }
-            }
+            _heroHandler.OnTrigger(this, other);
         }
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Game.Platforms
@@ -13,15 +15,21 @@ namespace Game.Platforms
         public GameObject spriteLinePref;
         private readonly List<GameObject> _lines = new List<GameObject>();
 
+        public static event Action LevelCompleted;
+
+
+        public GameData gameData;
         
 
         public Bounds finishArea;
 
 
-        private void Awake()
+    
+        
+
+        private void Start()
         {
             CreateLines();
-
             finishArea = new Bounds(
                 finishTeleport.transform.position + Vector3.up * 16.0f,
                 new Vector3(8f, 8f, 0.0f)
@@ -48,6 +56,7 @@ namespace Game.Platforms
 
         private IEnumerator Launch(HeroController heroController)
         {
+            // yield return new WaitUntil(() => gameObject.activeSelf);
             heroController.isActive = false;
             heroController.gameObject.SetActive(false);
             SetLinesPositions(startTeleport.transform.position.y);
@@ -75,6 +84,7 @@ namespace Game.Platforms
 
         private IEnumerator Finish(HeroController heroController)
         {
+            
             heroController.isActive = false;
             SetLinesPositions(finishTeleport.transform.position.y);
             yield return new WaitForSeconds(0.5f);
@@ -95,6 +105,9 @@ namespace Game.Platforms
             yield return new WaitForSeconds(1.0f);
             yield return null;
             //  TODO go to next level
+            // LevelCompleted?.Invoke();
+            gameData.CollectLevel();
+            
         }
 
         private void SetLinesPositions(float positionY)
