@@ -19093,6 +19093,7 @@ MonoBehaviour:
   gameData: {fileID: 11400000, guid: 10164e849c816bc4cbdcd4952126751f, type: 2}
   respawnPoints: {fileID: 7661757507591821490}
   teleportController: {fileID: 6302357313520819710}
+  platforms: {fileID: 3408145511321965646}
 --- !u!1 &5446675169419891560
 GameObject:
   m_ObjectHideFlags: 0
@@ -22950,9 +22951,6 @@ MonoBehaviour:
   finishTeleport: {fileID: 249780040936468089}
   spriteLinePref: {fileID: 353976223637553427, guid: 7c7987d917498314bb436ae85d788d2f, type: 3}
   gameData: {fileID: 11400000, guid: 10164e849c816bc4cbdcd4952126751f, type: 2}
-  finishArea:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &8192239752704035510
 GameObject:
   m_ObjectHideFlags: 0

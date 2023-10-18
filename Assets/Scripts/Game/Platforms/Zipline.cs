@@ -41,7 +41,7 @@ namespace Game.Platforms
         }
 
 
-        private void SetStartPosition()
+        public void RestorePosition()
         {
             transform.position = _startPosition;
         }

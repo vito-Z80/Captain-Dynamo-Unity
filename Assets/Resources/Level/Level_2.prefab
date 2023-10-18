@@ -18335,6 +18335,7 @@ MonoBehaviour:
   gameData: {fileID: 11400000, guid: 10164e849c816bc4cbdcd4952126751f, type: 2}
   respawnPoints: {fileID: 7661757507591821490}
   teleportController: {fileID: 6302357313520819710}
+  platforms: {fileID: 3408145511321965646}
 --- !u!1 &5516920818777499751
 GameObject:
   m_ObjectHideFlags: 0

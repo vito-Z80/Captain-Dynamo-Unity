@@ -10,10 +10,7 @@ namespace Game.Platforms
         private void OnCollisionEnter2D(Collision2D collision)
         {
             StartCoroutine(ActiveState(collision));
-            // Определите направление от bumper к персонажу
-            Vector3 bounceDirection = (collision.gameObject.transform.position - transform.position).normalized;
-
-            // Примените силу отскока к персонажу
+            var bounceDirection = (collision.gameObject.transform.position - transform.position).normalized;
             collision.rigidbody.velocity = bounceDirection * bounceForce;
         }
 

@@ -118,7 +118,7 @@ namespace Game
             _bc.offset = _stayCollider.center;
             _bc.size = _stayCollider.size;
         }
-        
+
         public void SetStartPosition(Vector3 position)
         {
             transform.position = position;
@@ -136,7 +136,7 @@ namespace Game
         {
             if (_onZipline) return;
             direction = Input.GetAxis("Horizontal");
-            var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed; 
+            var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed;
             _rb.velocity = new Vector2(actualSpeed * direction, _rb.velocity.y) + _additionalSpeedFactor;
         }
 
@@ -171,6 +171,7 @@ namespace Game
 
         public void Dead()
         {
+            levelController.RestoreZiplines();
             _isDead = true;
             _rb.velocity = Vector2.zero;
             _bc.enabled = false;

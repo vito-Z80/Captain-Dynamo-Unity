@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Platforms;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using AnimationState = Animations.AnimationState;
@@ -22,8 +23,10 @@ namespace Game
         //
         public GameObject respawnPoints;
         public TeleportController teleportController;
+        public GameObject platforms;
 
         private List<Vector3> _respawnPointsList = new List<Vector3>();
+        private Zipline[] _ziplines;
 
 
         private HeroController _heroController;
@@ -31,7 +34,6 @@ namespace Game
         private void Start()
         {
             // TeleportController.LevelCompleted += () => { Destroy(gameObject); };
-            gameData.diamondsOnLevel = GetDiamondsOnLevel();
             LevelLaunch();
         }
 
@@ -40,14 +42,25 @@ namespace Game
         {
             FindRespawnPoints();
             FindTeleports();
+            FindZiplines();
             _heroController ??= FindObjectOfType<HeroController>(true);
             _heroController.gameObject.SetActive(false);
             _heroController.levelController = this;
             _heroController.SetStartPosition(teleportController.startTeleport.transform.position + Vector3.up * 16.0f);
             teleportController.StartLevel(_heroController);
+            gameData.diamondsOnLevel = GetDiamondsOnLevel();
+            
         }
 
-
+        public void RestoreZiplines()
+        {
+            foreach (var zipline in _ziplines)
+            {
+                zipline.RestorePosition();
+            }
+        }
+        
+        
         public void LevelCompleted()
         {
             _heroController.isActive = false;
@@ -57,6 +70,11 @@ namespace Game
             teleportController.FinishLevel(_heroController);
         }
 
+        
+        private void FindZiplines()
+        {
+            _ziplines = platforms.GetComponentsInChildren<Zipline>();
+        }
 
         private void FindRespawnPoints()
         {
