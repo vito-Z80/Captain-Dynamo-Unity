@@ -4272,6 +4272,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: empty
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 181
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0517aa881fe0b234e8a39c723ae6f3ea
+      internalID: 935656484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -4402,6 +4423,7 @@ TextureImporter:
       diamond0: -1041463592
       diamond1: -167646591
       diamond2: 37799818
+      empty: 935656484
       enemy_Spider: -1671521696
       enemy_Spider2: 1816878925
       enemy_Spider3: 1437201461
