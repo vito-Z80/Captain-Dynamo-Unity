@@ -54,6 +54,11 @@ namespace Game
                     hero.levelController.LevelCompleted();
                 }
             }
+
+            if (other.gameObject.CompareTag(Define.Deadly))
+            {
+                hero.Dead();
+            }
         }
     }
 }
