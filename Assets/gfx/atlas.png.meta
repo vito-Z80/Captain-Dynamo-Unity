@@ -4281,7 +4281,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -4289,6 +4289,48 @@ TextureImporter:
       bones: []
       spriteID: 0517aa881fe0b234e8a39c723ae6f3ea
       internalID: 935656484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shaft
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 168
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7953daf0ef3ca824aa6d2c54ebfc22d8
+      internalID: -1920874879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShaftMask
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 168
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa2b03e076c43da46aff68e7b609c532
+      internalID: 1726012688
       vertices: []
       indices: 
       edges: []
@@ -4306,6 +4348,8 @@ TextureImporter:
     nameFileIdTable:
       BumperOff: -1462835887
       BumperOn: 1904663409
+      Shaft: -1920874879
+      ShaftMask: 1726012688
       W: 676669030
       atlas_0: -1212351324
       atlas_1: 1102897893

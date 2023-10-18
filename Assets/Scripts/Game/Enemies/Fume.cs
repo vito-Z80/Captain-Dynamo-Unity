@@ -8,7 +8,6 @@ namespace Game.Enemies
 {
     public class Fume : MonoBehaviour
     {
-        private SpriteRenderer _spriteRenderer;
         private AnimationSprite _animationSprite;
         private CircleCollider2D _circleCollider2D;
 
@@ -20,12 +19,10 @@ namespace Game.Enemies
         private void Start()
         {
             _fumeTime = Random.value * FumeTime;
-            _spriteRenderer = GetComponent<SpriteRenderer>();
             _animationSprite = GetComponent<AnimationSprite>();
             _circleCollider2D = GetComponent<CircleCollider2D>();
         }
-
-
+        
         private void FixedUpdate()
         {
             _fumeTime += Time.deltaTime;
