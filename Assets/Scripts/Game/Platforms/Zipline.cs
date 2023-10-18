@@ -6,6 +6,7 @@ using AnimationState = Animations.AnimationState;
 
 namespace Game.Platforms
 {
+    //  TODO устанавливать стартовую позицию при смерти игрока.
     public class Zipline : FixedWalkAction, IPlatform
     {
         public PlatformType platformType;
@@ -17,9 +18,11 @@ namespace Game.Platforms
 
         private float _hideColliderTime = 0.0f;
 
+        private Vector3 _startPosition;
+
         private void Awake()
         {
-
+            _startPosition = transform.position;
             _circleCollider2D = GetComponent<CircleCollider2D>();
             _animationSprite = GetComponent<AnimationSprite>();
         }
@@ -38,6 +41,10 @@ namespace Game.Platforms
         }
 
 
+        private void SetStartPosition()
+        {
+            transform.position = _startPosition;
+        }
 
         private void GetOffMe()
         {
@@ -71,7 +78,5 @@ namespace Game.Platforms
         {
             return platformType;
         }
-
-
     }
 }

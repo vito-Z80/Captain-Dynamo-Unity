@@ -19,30 +19,15 @@ namespace Game.Platforms
 
 
         public GameData gameData;
-        
-
-        public Bounds finishArea;
 
 
-    
-        
 
-        private void Start()
+        private void Awake()
         {
             CreateLines();
-            finishArea = new Bounds(
-                finishTeleport.transform.position + Vector3.up * 16.0f,
-                new Vector3(8f, 8f, 0.0f)
-            );
         }
 
-
-        public bool OnLevelCompleted(HeroController heroPosition)
-        {
-            return finishArea.Contains(heroPosition.transform.position);
-        }
-
-
+        
         public void StartLevel(HeroController heroController)
         {
             StartCoroutine(Launch(heroController));
@@ -57,9 +42,11 @@ namespace Game.Platforms
         private IEnumerator Launch(HeroController heroController)
         {
             // yield return new WaitUntil(() => gameObject.activeSelf);
+            var startTeleportPosition = startTeleport.transform.position;
+            heroController.SetStartPosition(startTeleportPosition + (Vector3.up * 16.0f));
             heroController.isActive = false;
             heroController.gameObject.SetActive(false);
-            SetLinesPositions(startTeleport.transform.position.y);
+            SetLinesPositions(startTeleportPosition);
             yield return new WaitForSeconds(1.0f);
             foreach (var line in _lines)
             {
@@ -84,9 +71,7 @@ namespace Game.Platforms
 
         private IEnumerator Finish(HeroController heroController)
         {
-            
-            heroController.isActive = false;
-            SetLinesPositions(finishTeleport.transform.position.y);
+            SetLinesPositions(finishTeleport.transform.position);
             yield return new WaitForSeconds(0.5f);
             foreach (var line in _lines)
             {
@@ -102,22 +87,22 @@ namespace Game.Platforms
                 yield return new WaitForSeconds(0.15f);
                 line.SetActive(false);
             }
+
             yield return new WaitForSeconds(1.0f);
             yield return null;
             //  TODO go to next level
             // LevelCompleted?.Invoke();
             gameData.CollectLevel();
-            
         }
 
-        private void SetLinesPositions(float positionY)
+        private void SetLinesPositions(Vector3 position)
         {
-            var topPos = positionY + 9.0f;
+            var topPos = position.y + 9.0f;
             for (var y = 0; y < 16; y++)
             {
                 var value = y * 2;
                 if (value >= 16) value -= 15;
-                var resultPos = new Vector3(0.0f, value + topPos, 0.0f);
+                var resultPos = new Vector3(position.x, value + topPos, 0.0f);
                 _lines[y].transform.position = resultPos;
             }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using Game.Platforms;
 using UnityEngine;
 using UnityEngine.Events;
+using AnimationState = Animations.AnimationState;
 
 namespace Game
 {
@@ -24,22 +25,36 @@ namespace Game
 
         private List<Vector3> _respawnPointsList = new List<Vector3>();
 
+
+        private HeroController _heroController;
+
         private void Start()
         {
             // TeleportController.LevelCompleted += () => { Destroy(gameObject); };
             gameData.diamondsOnLevel = GetDiamondsOnLevel();
-            // Core.Diamond.SetDiamondsOnLevel(GetDiamondsOnLevel());
-            FindRespawnPoints();
-            FindTeleports();
-            ShowHero();
+            LevelLaunch();
         }
 
 
-        private void ShowHero()
+        private void LevelLaunch()
         {
-            var hero = FindObjectOfType<HeroController>(true);
-            hero.levelController = this;
-            hero.gameObject.SetActive(true);
+            FindRespawnPoints();
+            FindTeleports();
+            _heroController ??= FindObjectOfType<HeroController>(true);
+            _heroController.gameObject.SetActive(false);
+            _heroController.levelController = this;
+            _heroController.SetStartPosition(teleportController.startTeleport.transform.position + Vector3.up * 16.0f);
+            teleportController.StartLevel(_heroController);
+        }
+
+
+        public void LevelCompleted()
+        {
+            _heroController.isActive = false;
+            _heroController.animationSprite.SetState(AnimationState.Idle);
+            _heroController._rb.velocity = Vector3.zero;
+            _heroController.SetStartPosition(teleportController.finishTeleport.transform.position + Vector3.up * 16.0f);
+            teleportController.FinishLevel(_heroController);
         }
 
 

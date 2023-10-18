@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Animations;
+﻿using Animations;
 using Camera;
 using Game.Actions;
-using Game.Drops;
-using Game.Platforms;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.U2D;
 using AnimationState = Animations.AnimationState;
 
 namespace Game
@@ -18,7 +13,7 @@ namespace Game
         public Rigidbody2D _rb;
         private BoxCollider2D _bc;
         private AnimationState _animationState;
-        [FormerlySerializedAs("_isJumping")] public bool isJumping = false;
+        public bool isJumping = false;
         [HideInInspector] public float direction = 0.0f;
         private bool _onZipline = false;
         private bool _isDead = false;
@@ -31,47 +26,27 @@ namespace Game
 
 
         private readonly HeroHandler _heroHandler = new HeroHandler();
-        //
-        
-
         [HideInInspector] public bool isActive = false;
 
-        //
-
-        // public CameraController _gameCamera;
-
-        // public GameController gameController;
-
-
         public CameraController cam;
-        
         public LevelController levelController;
 
-        // private GameObject _respawnPoints;
-        // private TeleportController _teleport;
         public float speed = 60.0f;
 
 
-        // private List<Vector3> _respawnPointsList = new List<Vector3>();
+        private Bounds _stayCollider;
+        private Bounds _sitCollider;
+
 
         private void Start()
         {
-            
-            // _cam = gameController.cameraController;
-            // _respawnPoints = levelController.respawnPoints;
-            // _teleport = levelController.teleportController;
-            // _respawnPointsList = _respawnPoints.GetComponentsInChildren<Transform>().Select(t => t.position)
-            //     .OrderBy(pos => pos.y).ToList();
-            // _respawnPointsList.Remove(_respawnPoints.transform.position);
-            // _respawnPoints.SetActive(false);
-
             _animationState = AnimationState.Idle;
             _rb = GetComponent<Rigidbody2D>();
             _bc = GetComponent<BoxCollider2D>();
             animationSprite = GetComponent<AnimationSprite>();
-
-            Respawn();
-            levelController.teleportController.StartLevel(this);
+            _stayCollider = new Bounds(new Vector3(0.0f, -1.5f, 0.0f), new Vector3(7.0f, 13.0f, 0.0f));
+            _sitCollider = new Bounds(new Vector3(0.0f, -2.5f, 0.0f), new Vector3(7.0f, 11.0f, 0.0f));
+            SetStayCollider();
         }
 
         private void Update()
@@ -79,7 +54,6 @@ namespace Game
             if (_isDead || !isActive) return;
             ControlledJump(JumpForce);
             Animation();
-            // LevelCompleted();
         }
 
         private void FixedUpdate()
@@ -94,19 +68,22 @@ namespace Game
             }
             else
             {
+                SetStayCollider();
                 Move();
+                var vert = Input.GetAxis("Vertical");
+                if (vert < 0.0f) SitDown();
             }
         }
 
-        public void LevelCompleted(Vector3 lastPosition)
+
+        private void SitDown()
         {
-            isActive = false;
-            animationSprite.SetState(AnimationState.Idle);
-            transform.position = lastPosition + Vector3.up * 16.0f;
-            _rb.velocity = Vector3.zero;
-            _rb.MovePosition(levelController.teleportController.finishArea.center);
-            levelController.teleportController.FinishLevel(this);
+            if (isJumping) return;
+            _animationState = AnimationState.Sit;
+            _bc.offset = _sitCollider.center;
+            _bc.size = _sitCollider.size;
         }
+
 
         private void Animation()
         {
@@ -136,6 +113,17 @@ namespace Game
             }
         }
 
+        private void SetStayCollider()
+        {
+            _bc.offset = _stayCollider.center;
+            _bc.size = _stayCollider.size;
+        }
+        
+        public void SetStartPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
+
         private void ControlledJump(float jumpForce)
         {
             if (Input.GetKeyDown(KeyCode.Space) && _rb.velocity.y == 0.0f)
@@ -148,7 +136,8 @@ namespace Game
         {
             if (_onZipline) return;
             direction = Input.GetAxis("Horizontal");
-            _rb.velocity = new Vector2(speed * direction, _rb.velocity.y) + _additionalSpeedFactor;
+            var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed; 
+            _rb.velocity = new Vector2(actualSpeed * direction, _rb.velocity.y) + _additionalSpeedFactor;
         }
 
         public void SetAdditionalSpeed(Vector2 additionalSpeedFactor)
@@ -206,10 +195,8 @@ namespace Game
             transform.position = levelController.GetRespawnPosition(_deathPosition);
             cam.transform.position = Vector3.back * 10.0f + Vector3.up * transform.position.y;
         }
-        
-        
-        
-        
+
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             _heroHandler.OnCollision(this, collision);

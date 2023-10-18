@@ -17,6 +17,7 @@ TagManager:
   - ZiplinePoint
   - KillPoint
   - Deadly
+  - Bumper
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - Platform
   - Zipline
   - DeadlyItems
-  - 
+  - Bumper
   - 
   - 
   - 

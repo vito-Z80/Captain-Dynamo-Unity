@@ -1,28 +1,19 @@
-﻿using System;
-using Game.Actions;
+﻿using Game.Actions;
 using Game.Drops;
-using Game.Platforms;
 using UnityEngine;
 
 namespace Game
 {
     public class HeroHandler
     {
-        private const string Enemy = "Enemy";
-        private const string Deadly = "Deadly";
-        private const string Drop = "Drop";
-        private const string Platform = "Platform";
-        private const string Ground = "Ground";
-        private const string Exit = "Exit";
-
-        
 
         public void OnTrigger(HeroController hero, Collider2D other)
         {
+            
             if (!hero.isActive) return;
-            if (other.gameObject.CompareTag(Enemy))
+            if (other.gameObject.CompareTag(Define.Enemy))
             {
-                if (hero._rb.velocity.y < 0.0f)
+                if (hero._rb.velocity.y < 0.0f && !other.name.Contains(Define.Shuriken))
                 {
                     other.GetComponent<IDeath>().ToKill();
                     hero._rb.velocity = new Vector2(hero._rb.velocity.x, 0.0f);
@@ -35,33 +26,32 @@ namespace Game
             }
 
             //
-            if (other.gameObject.CompareTag(Deadly))
+            if (other.gameObject.CompareTag(Define.Deadly))
             {
                 hero.Dead();
             }
 
-            if (other.gameObject.CompareTag(Drop))
+            if (other.gameObject.CompareTag(Define.Drop))
             {
                 var d = other.GetComponent<ICollected>();
                 d.Collect();
             }
         }
 
-       
 
         public void OnCollision(HeroController hero, Collision2D other)
         {
-            if (other.gameObject.CompareTag(Ground))
+            if (other.gameObject.CompareTag(Define.Ground))
             {
                 hero.isJumping = false;
             }
 
-            if (other.gameObject.CompareTag(Platform))
+            if (other.gameObject.CompareTag(Define.Platform))
             {
                 hero.isJumping = false;
-                if (other.gameObject.name.Contains(Exit))
+                if (other.gameObject.name.Contains(Define.Exit))
                 {
-                    hero.LevelCompleted(other.transform.position);
+                    hero.levelController.LevelCompleted();
                 }
             }
         }
