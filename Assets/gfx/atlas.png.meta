@@ -4335,6 +4335,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: floor1pix
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 146
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbf3acf47b91c2a48be9598893f3851d
+      internalID: -107865623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -4485,6 +4506,7 @@ TextureImporter:
       enemy_turtle2: 211054934
       enemy_turtle3: -1137330304
       eye_start: 2117712506
+      floor1pix: -107865623
       font_start: -1753396282
       gamelogo: 1162158210
       hand_01: 928496018

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   diamondsOnLevel: 80
-  diamondsCollected: 4
-  scores: 400
+  diamondsCollected: 0
+  scores: 1000
   currentLevel: 2
   hasDiamondUpdate: 0
   hasScoresUpdate: 0

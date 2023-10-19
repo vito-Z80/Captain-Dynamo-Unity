@@ -2,7 +2,6 @@
 using Camera;
 using Game.Actions;
 using UnityEngine;
-using UnityEngine.U2D;
 using AnimationState = Animations.AnimationState;
 
 namespace Game
@@ -33,6 +32,7 @@ namespace Game
 
         public float speed = 60.0f;
 
+        [HideInInspector] public float assignedSpeed;
 
         private Bounds _stayCollider;
         private Bounds _sitCollider;
@@ -47,6 +47,7 @@ namespace Game
             _stayCollider = new Bounds(new Vector3(0.0f, -1.5f, 0.0f), new Vector3(7.0f, 13.0f, 0.0f));
             _sitCollider = new Bounds(new Vector3(0.0f, -2.5f, 0.0f), new Vector3(7.0f, 11.0f, 0.0f));
             SetStayCollider();
+            assignedSpeed = speed;
         }
 
         private void Update()
@@ -201,6 +202,11 @@ namespace Game
         private void OnCollisionEnter2D(Collision2D collision)
         {
             _heroHandler.OnCollision(this, collision);
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            _heroHandler.OnCollisionExit(this,collision);
         }
 
         private void OnTriggerEnter2D(Collider2D other)

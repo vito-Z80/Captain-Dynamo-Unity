@@ -204,7 +204,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 37.71, y: -315.1, z: 0}
 --- !u!4 &464224049 stripped
 Transform:
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelController: {fileID: 0}
-  debugLevel: 1
+  debugLevel: 0
   data: {fileID: 11400000, guid: 10164e849c816bc4cbdcd4952126751f, type: 2}
   cameraController: {fileID: 1294934580}
 --- !u!1 &846761879
@@ -488,7 +488,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &870149758
 PrefabInstance:
@@ -5901,7 +5901,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2067783597
 GameObject:
@@ -6141,7 +6141,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2090333153
 GameObject:
@@ -6239,9 +6239,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level_4
       objectReference: {fileID: 0}
+    - target: {fileID: 386306678887266034, guid: cf22a7766410ffb4db9e6d094eeb7a3b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2411822937017367518, guid: cf22a7766410ffb4db9e6d094eeb7a3b, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6218247723628606382, guid: cf22a7766410ffb4db9e6d094eeb7a3b, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6218247723628606382, guid: cf22a7766410ffb4db9e6d094eeb7a3b, type: 3}
       propertyPath: m_LocalPosition.x

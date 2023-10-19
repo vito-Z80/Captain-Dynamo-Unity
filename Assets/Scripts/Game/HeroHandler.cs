@@ -7,6 +7,7 @@ namespace Game
     public class HeroHandler
     {
 
+        private const float SlowingCoefficient = 2.5f;
         public void OnTrigger(HeroController hero, Collider2D other)
         {
             
@@ -53,12 +54,29 @@ namespace Game
                 {
                     hero.levelController.LevelCompleted();
                 }
+
+                if (other.gameObject.name.Contains(Define.Slowing))
+                {
+                    hero.speed /= SlowingCoefficient;
+                }
             }
 
             if (other.gameObject.CompareTag(Define.Deadly))
             {
                 hero.Dead();
             }
+        }
+
+        public void OnCollisionExit(HeroController hero, Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag(Define.Platform))
+            {
+                if (collision.gameObject.name.Contains(Define.Slowing))
+                {
+                    hero.speed = hero.assignedSpeed;
+                }
+            }
+            
         }
     }
 }

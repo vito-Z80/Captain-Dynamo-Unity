@@ -18,6 +18,7 @@ TagManager:
   - KillPoint
   - Deadly
   - Bumper
+  - SlowlyPlatform
   layers:
   - Default
   - TransparentFX

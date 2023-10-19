@@ -18,7 +18,7 @@ namespace Game.Enemies
             _rigidbody2D.gravityScale = gravityScale;
             _rigidbody2D.sleepMode = RigidbodySleepMode2D.StartAsleep;
             _topPosition = transform.position;
-            _startTime = Random.value;
+            _startTime = Random.value * 2.0f;
         }
 
 

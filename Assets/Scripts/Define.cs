@@ -9,4 +9,5 @@
     public const string Platform = "Platform";
     public const string Ground = "Ground";
     public const string Exit = "Exit";
+    public const string Slowing = "Slowing";
 }
