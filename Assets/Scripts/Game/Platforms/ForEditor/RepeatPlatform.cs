@@ -11,6 +11,9 @@ namespace Game.Platforms.ForEditor
         public GameObject centralImage;
         public GameObject rightImage;
 
+        public bool leftImageVisible = true;
+        public bool rightImageVisible = true;
+
         [SerializeField] public PlatformType platformType;
         [SerializeField] [Range(0, 10)] public int repeatCount = 0;
         [SerializeField] public float spriteWidth = 0.0f;
@@ -47,6 +50,8 @@ namespace Game.Platforms.ForEditor
             //  box collider create
             // _bc.offset = Vector2.zero;
             boxCollider2D.size = new Vector2((repeatCount + 2) * spriteWidth, spriteHeight);
+            Part[0].SetActive(leftImageVisible);
+            Part[^1].SetActive(rightImageVisible);
         }
 
         private GameObject GetInstantiate(ref float posX, GameObject pref)
