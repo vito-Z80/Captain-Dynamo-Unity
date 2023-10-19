@@ -161,4 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aba57ba7fd24ebd8f78817009789cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bumperOffSprite: {fileID: -1641116319, guid: 663a48dd2aa42b84189c4d3536fa1cca, type: 3}
+  bumperOnSprite: {fileID: -715322334, guid: 663a48dd2aa42b84189c4d3536fa1cca, type: 3}
   bounceForce: 150
