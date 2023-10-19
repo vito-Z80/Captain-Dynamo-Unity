@@ -10,17 +10,26 @@ namespace Game.Enemies
         private Rigidbody2D _rigidbody2D;
         private Vector3 _topPosition;
 
+        private float _startTime;
 
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _rigidbody2D.gravityScale = gravityScale;
+            _rigidbody2D.sleepMode = RigidbodySleepMode2D.StartAsleep;
             _topPosition = transform.position;
+            _startTime = Random.value;
         }
 
 
         private void FixedUpdate()
         {
+            _startTime -= Time.deltaTime;
+            if (_startTime >= 0.0f) return;
+            if (_rigidbody2D.IsSleeping())
+            {
+                _rigidbody2D.WakeUp();
+            }
             if (_rigidbody2D.gravityScale > 0.0f) return;
             if (transform.position.y < _topPosition.y) return;
             _rigidbody2D.gravityScale = gravityScale;
