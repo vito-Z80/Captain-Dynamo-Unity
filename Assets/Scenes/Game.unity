@@ -562,6 +562,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7327525440142361549, guid: 4f70b647ec24aa94b90f801b198d6081, type: 3}
+      propertyPath: animations.Array.data[4].duration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8555460665427364027, guid: 4f70b647ec24aa94b90f801b198d6081, type: 3}
       propertyPath: m_Size.y
       value: 11

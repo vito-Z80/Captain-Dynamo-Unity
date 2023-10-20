@@ -130,7 +130,7 @@ namespace Game.Enemies
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Ground"))
+            if (other.CompareTag(Define.Ground) || other.CompareTag(Define.Deadly))
             {
                 _direction = _direction == HorizontalDirection.Left
                     ? HorizontalDirection.Right

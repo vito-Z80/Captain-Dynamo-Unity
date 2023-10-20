@@ -16,6 +16,7 @@ namespace Game
         [HideInInspector] public float direction = 0.0f;
         private bool _onZipline = false;
         private bool _isDead = false;
+        private bool _isSiting = false;
 
 
         private const float JumpForce = 50f;
@@ -54,6 +55,17 @@ namespace Game
         {
             if (_isDead || !isActive) return;
             ControlledJump(JumpForce);
+
+
+            if (_isSiting && !isJumping)
+            {
+                SetSitCollider();
+            }
+            else
+            {
+                SetStayCollider();
+            }
+
             Animation();
         }
 
@@ -69,18 +81,15 @@ namespace Game
             }
             else
             {
-                SetStayCollider();
-                Move();
                 var vert = Input.GetAxis("Vertical");
-                if (vert < 0.0f) SitDown();
+                _isSiting = vert < 0.0f && direction == 0.0f;
+                Move();
             }
         }
 
 
-        private void SitDown()
+        private void SetSitCollider()
         {
-            if (isJumping) return;
-            _animationState = AnimationState.Sit;
             _bc.offset = _sitCollider.center;
             _bc.size = _sitCollider.size;
         }
@@ -100,9 +109,12 @@ namespace Game
                     break;
                 case 0.0f:
                     _animationState = AnimationState.Idle;
+
+
                     break;
             }
 
+            if (_isSiting) _animationState = AnimationState.Sit;
             if (isJumping) _animationState = AnimationState.JumpUp;
 
             if (_onZipline) _animationState = AnimationState.Zipline;
@@ -127,7 +139,7 @@ namespace Game
 
         private void ControlledJump(float jumpForce)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && _rb.velocity.y == 0.0f)
+            if (Input.GetAxis("Jump") > 0.0f && _rb.velocity.y == 0.0f)
             {
                 Jump(jumpForce);
             }
@@ -206,7 +218,7 @@ namespace Game
 
         private void OnCollisionExit2D(Collision2D collision)
         {
-            _heroHandler.OnCollisionExit(this,collision);
+            _heroHandler.OnCollisionExit(this, collision);
         }
 
         private void OnTriggerEnter2D(Collider2D other)

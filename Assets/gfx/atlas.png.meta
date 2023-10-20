@@ -2387,9 +2387,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 184
-        y: 200
+        y: 192
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2408,9 +2408,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 200
-        y: 200
+        y: 192
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2429,9 +2429,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 216
-        y: 200
+        y: 192
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2450,9 +2450,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 232
-        y: 200
+        y: 192
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4356,6 +4356,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: mask16x16
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 120
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c54e67bd90c5f8249bdf6f4470b424df
+      internalID: -594867329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mask16x24
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 112
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4921e94a3d328334b8dcf065d9e81eff
+      internalID: 1704958333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mask24x24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36caed7f1d243e24d89cb037c4aade89
+      internalID: -284572037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -4536,6 +4599,9 @@ TextureImporter:
       hero_zipline_1: 889341060
       hero_zipline_2: -1513477614
       hero_zipline_3: -350040490
+      mask16x16: -594867329
+      mask16x24: 1704958333
+      mask24x24: -284572037
       platform_static_left_2: -326095724
       press_pole: 1756860961
       press_pole_top: -1189921861

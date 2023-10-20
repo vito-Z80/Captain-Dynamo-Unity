@@ -16,11 +16,13 @@ namespace Game.Platforms
         private Vector3 _bottomPosition;
         private VerticalDirection _direction;
 
+        public GameObject platformSprite;
 
         private void Start()
         {
-            _topPosition = transform.position;
+            _topPosition = platformSprite.transform.position;
             _bottomPosition = _topPosition + Vector3.down * diveOffset;
+            platformSprite.transform.position = _bottomPosition;
             _direction = VerticalDirection.Stay;
         }
 
@@ -49,24 +51,24 @@ namespace Game.Platforms
             _timer += Time.deltaTime;
             if (_timer < waitTime) return;
             _timer = 0.0f;
-            _direction = Math.Abs(_topPosition.y - transform.position.y) < 0.02f
+            _direction = Math.Abs(_topPosition.y - platformSprite.transform.position.y) < 0.02f
                 ? VerticalDirection.Down
                 : VerticalDirection.Up;
         }
 
         private void MoveUp()
         {
-            transform.position += Vector3.up * 0.3f;
-            if (transform.position.y < _topPosition.y) return;
-            transform.position = _topPosition;
+            platformSprite.transform.position += Vector3.up * 0.3f;
+            if (platformSprite.transform.position.y < _topPosition.y) return;
+            platformSprite.transform.position = _topPosition;
             _direction = VerticalDirection.Stay;
         }
 
         private void MoveDown()
         {
-            transform.position += Vector3.down * 0.3f;
-            if (transform.position.y > _bottomPosition.y) return;
-            transform.position = _bottomPosition;
+            platformSprite.transform.position += Vector3.down * 0.3f;
+            if (platformSprite.transform.position.y > _bottomPosition.y) return;
+            platformSprite.transform.position = _bottomPosition;
             _direction = VerticalDirection.Stay;
         }
     }

@@ -29,7 +29,7 @@ namespace Game
 
         private void NextLevel()
         {
-            var levelNumber = data.currentLevel + 4;
+            var levelNumber = data.currentLevel;
             if (levelController is not null) Destroy(levelController.gameObject);
             data.Reset();
             data.currentLevel = levelNumber;
