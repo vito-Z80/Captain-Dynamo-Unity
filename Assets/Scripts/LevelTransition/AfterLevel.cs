@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 namespace LevelTransition
 {
-    public class LevelTransition : MonoBehaviour
+    public class AfterLevel : MonoBehaviour
     {
         public GameData gameData;
         public TextMesh perfectLabel;
         public TextMesh diamonds;
         public TextMesh score;
-
+        [HideInInspector] public bool isDone = false;
 
         private const int DiamondPrice = 1000;
         private const int PerfectBonus = 10000;
@@ -73,7 +73,7 @@ namespace LevelTransition
                 PrintScore();
             }
             yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene("Game");
+            isDone = true;
         }
 
 

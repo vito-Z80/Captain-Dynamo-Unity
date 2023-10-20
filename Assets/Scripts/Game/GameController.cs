@@ -1,5 +1,4 @@
-﻿using System;
-using Camera;
+﻿using Camera;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -15,34 +14,31 @@ namespace Game
         public CameraController cameraController;
 
 
+        private const string LevelPrefPath = "Level/Level_";
+
         private void Start()
         {
-            data.Reset();
-            data.CollectLevel();
+            NextLevel();
+            // data.Reset();
+            // data.CollectLevel();
         }
 
-        private void FixedUpdate()
-        {
-            if (data.HasLevelUpdate()) NextLevel();
-        }
+        // private void FixedUpdate()
+        // {
+        //     if (data.HasLevelUpdate()) NextLevel();
+        // }
 
 
         private void NextLevel()
         {
             var levelNumber = data.currentLevel;
             if (levelController is not null) Destroy(levelController.gameObject);
-            data.Reset();
+            // data.Reset();
             data.currentLevel = levelNumber;
-            var levelName = "Level/Level_" + levelNumber;
-            if (debugLevel)
-            {
-                levelController = GameObject.Find("Level_").GetComponent<LevelController>();
-            }
-            else
-            {
-                var levelPref = Resources.Load<GameObject>(levelName);
-                levelController = Instantiate(levelPref).GetComponent<LevelController>();
-            }
+            var levelName = LevelPrefPath + levelNumber;
+            Debug.Log(levelName);
+            var levelPref = Resources.Load<GameObject>(levelName);
+            levelController = Instantiate(levelPref).GetComponent<LevelController>();
         }
     }
 }

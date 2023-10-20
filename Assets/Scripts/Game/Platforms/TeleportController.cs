@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace Game.Platforms
@@ -93,6 +94,7 @@ namespace Game.Platforms
             //  TODO go to next level
             // LevelCompleted?.Invoke();
             gameData.CollectLevel();
+            SceneManager.LoadScene("Scenes/LevelTransition");
         }
 
         private void SetLinesPositions(Vector3 position)
