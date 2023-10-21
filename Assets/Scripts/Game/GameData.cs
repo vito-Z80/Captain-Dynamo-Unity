@@ -19,7 +19,7 @@ namespace Game
             diamondsOnLevel = 0;
             diamondsCollected = 0;
             scores = 0;
-            currentLevel = 0;
+            currentLevel = 1;
             hasScoresUpdate = false;
             hasDiamondUpdate = false;
             hasLevelUpdate = false;

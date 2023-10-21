@@ -14,23 +14,18 @@ namespace Game
         public CameraController cameraController;
 
 
+        private AudioSource _audioSource;
         private const string LevelPrefPath = "Level/Level_";
 
         private void Start()
         {
+            _audioSource = GetComponent<AudioSource>();
             NextLevel();
-            // data.Reset();
-            // data.CollectLevel();
         }
-
-        // private void FixedUpdate()
-        // {
-        //     if (data.HasLevelUpdate()) NextLevel();
-        // }
-
-
+        
         private void NextLevel()
         {
+            _audioSource.Play();
             var levelNumber = data.currentLevel;
             if (levelController is not null) Destroy(levelController.gameObject);
             // data.Reset();

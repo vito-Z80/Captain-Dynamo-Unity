@@ -1,4 +1,6 @@
-﻿using Animations;
+﻿using System;
+using System.Linq;
+using Animations;
 using Camera;
 using Game.Actions;
 using UnityEngine;
@@ -8,11 +10,17 @@ namespace Game
 {
     public class HeroController : MonoBehaviour, IMovable
     {
+        public AudioSource jumpSound;
+        public AudioSource diamondSound;
+        public AudioSource deathSound;
+        public AudioSource killSound;
+
+
         [HideInInspector] public AnimationSprite animationSprite;
-        public Rigidbody2D _rb;
+        [HideInInspector] public Rigidbody2D _rb;
         private BoxCollider2D _bc;
         private AnimationState _animationState;
-        public bool isJumping = false;
+        [HideInInspector] public bool isJumping = false;
         [HideInInspector] public float direction = 0.0f;
         private bool _onZipline = false;
         private bool _isDead = false;
@@ -177,6 +185,7 @@ namespace Game
         public void Jump(float jumpForce)
         {
             isJumping = true;
+            jumpSound.Play();
             var value = Mathf.Sqrt(2f * jumpForce * Mathf.Abs(Physics2D.gravity.y) * _rb.gravityScale) * _rb.mass;
             _rb.AddForce((Vector2.up * value), ForceMode2D.Impulse);
         }
@@ -184,6 +193,7 @@ namespace Game
 
         public void Dead()
         {
+            deathSound.Play();
             levelController.RestoreZiplines();
             _isDead = true;
             _rb.velocity = Vector2.zero;

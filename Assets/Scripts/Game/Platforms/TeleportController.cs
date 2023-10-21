@@ -91,9 +91,8 @@ namespace Game.Platforms
 
             yield return new WaitForSeconds(1.0f);
             yield return null;
-            //  TODO go to next level
-            // LevelCompleted?.Invoke();
             gameData.CollectLevel();
+            //  go to between level screen and to next level
             SceneManager.LoadScene("Scenes/LevelTransition");
         }
 

@@ -189,4 +189,3 @@ MonoBehaviour:
   - {fileID: -1164793247, guid: 663a48dd2aa42b84189c4d3536fa1cca, type: 3}
   - {fileID: -1941376775, guid: 663a48dd2aa42b84189c4d3536fa1cca, type: 3}
   fingersSpriteRenderer: {fileID: 7755876855799588991}
-  countdownCompleted: 0

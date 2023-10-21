@@ -19,6 +19,7 @@ namespace Game
                     other.GetComponent<IDeath>().ToKill();
                     hero._rb.velocity = new Vector2(hero._rb.velocity.x, 0.0f);
                     hero.Jump(24.0f);
+                    hero.killSound.Play();
                 }
                 else
                 {
@@ -35,6 +36,7 @@ namespace Game
             if (other.gameObject.CompareTag(Define.Drop))
             {
                 var d = other.GetComponent<ICollected>();
+                hero.diamondSound.Play();
                 d.Collect();
             }
         }
