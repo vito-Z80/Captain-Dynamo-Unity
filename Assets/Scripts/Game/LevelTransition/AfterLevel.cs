@@ -54,6 +54,7 @@ namespace Game.LevelTransition
         private IEnumerator CountDiamonds()
         {
             var isPerfect = gameData.diamondsCollected == gameData.diamondsOnLevel;
+            yield return new WaitForSeconds(1f);
             while (gameData.diamondsCollected > 0)
             {
                 audioSource.Play();

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Animations;
+﻿using Animations;
 using Camera;
 using Game.Actions;
 using UnityEngine;
@@ -24,7 +22,7 @@ namespace Game
         [HideInInspector] public float direction = 0.0f;
         private bool _onZipline = false;
         private bool _isDead = false;
-        private bool _isSiting = false;
+        private bool _isSitting = false;
 
 
         private const float JumpForce = 50f;
@@ -61,12 +59,21 @@ namespace Game
 
         private void Update()
         {
-            if (_isDead || !isActive) return;
-            ControlledJump(JumpForce);
-
-
-            if (_isSiting && !isJumping)
+            if (_isDead || !isActive)
             {
+                if (transform.position.y < _afterDeadPosition.y)
+                {
+                    Respawn();
+                }
+                return;
+            }
+            ControlledJump(JumpForce);
+            var vert = Input.GetAxis("Vertical");
+            _isSitting = vert < 0.0f && _rb.velocity.y == 0.0f;
+            Move();
+            if (_isSitting && !isJumping)
+            {
+                _rb.velocity = Vector2.zero;
                 SetSitCollider();
             }
             else
@@ -76,25 +83,6 @@ namespace Game
 
             Animation();
         }
-
-        private void FixedUpdate()
-        {
-            if (!isActive) return;
-            if (_isDead)
-            {
-                if (transform.position.y < _afterDeadPosition.y)
-                {
-                    Respawn();
-                }
-            }
-            else
-            {
-                var vert = Input.GetAxis("Vertical");
-                _isSiting = vert < 0.0f && direction == 0.0f;
-                Move();
-            }
-        }
-
 
         private void SetSitCollider()
         {
@@ -122,7 +110,7 @@ namespace Game
                     break;
             }
 
-            if (_isSiting) _animationState = AnimationState.Sit;
+            if (_isSitting) _animationState = AnimationState.Sit;
             if (isJumping) _animationState = AnimationState.JumpUp;
 
             if (_onZipline) _animationState = AnimationState.Zipline;
@@ -140,7 +128,7 @@ namespace Game
             _bc.size = _stayCollider.size;
         }
 
-        public void SetStartPosition(Vector3 position)
+        public void SetPosition(Vector3 position)
         {
             transform.position = position;
         }
@@ -157,7 +145,9 @@ namespace Game
         {
             if (_onZipline) return;
             direction = Input.GetAxis("Horizontal");
-            var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed;
+            if (_isSitting && direction != 0.0f) _isSitting = false;   // Если сидел то может пойти из этого положения
+           
+            var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed;   //  В прыжке уменьшить горизонтальное перемещение.
             _rb.velocity = new Vector2(actualSpeed * direction, _rb.velocity.y) + _additionalSpeedFactor;
         }
 

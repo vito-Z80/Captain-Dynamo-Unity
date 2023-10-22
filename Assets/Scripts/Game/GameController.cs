@@ -1,4 +1,5 @@
-﻿using Camera;
+﻿using System;
+using Camera;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -22,7 +23,13 @@ namespace Game
             _audioSource = GetComponent<AudioSource>();
             NextLevel();
         }
-        
+
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.M)) _audioSource.mute = !_audioSource.mute;
+        }
+
         private void NextLevel()
         {
             _audioSource.Play();

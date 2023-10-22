@@ -44,7 +44,7 @@ namespace Game.Platforms
         {
             // yield return new WaitUntil(() => gameObject.activeSelf);
             var startTeleportPosition = startTeleport.transform.position;
-            heroController.SetStartPosition(startTeleportPosition + (Vector3.up * 16.0f));
+            heroController.SetPosition(startTeleportPosition + (Vector3.up * 16.0f));
             heroController.isActive = false;
             heroController.gameObject.SetActive(false);
             SetLinesPositions(startTeleportPosition);

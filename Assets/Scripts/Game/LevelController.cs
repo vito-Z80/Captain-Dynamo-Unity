@@ -46,7 +46,7 @@ namespace Game
             _heroController ??= FindObjectOfType<HeroController>(true);
             _heroController.gameObject.SetActive(false);
             _heroController.levelController = this;
-            _heroController.SetStartPosition(teleportController.startTeleport.transform.position + Vector3.up * 16.0f);
+            _heroController.SetPosition(teleportController.startTeleport.transform.position + Vector3.up * 16.0f);
             teleportController.StartLevel(_heroController);
             gameData.diamondsOnLevel = GetDiamondsOnLevel();
             
@@ -66,7 +66,7 @@ namespace Game
             _heroController.isActive = false;
             _heroController.animationSprite.SetState(AnimationState.Idle);
             _heroController._rb.velocity = Vector3.zero;
-            _heroController.SetStartPosition(teleportController.finishTeleport.transform.position + Vector3.up * 16.0f);
+            _heroController.SetPosition(teleportController.finishTeleport.transform.position + Vector3.up * 16.0f);
             teleportController.FinishLevel(_heroController);
         }
 
