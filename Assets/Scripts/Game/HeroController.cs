@@ -67,10 +67,10 @@ namespace Game
                 }
                 return;
             }
+            Move();
             ControlledJump(JumpForce);
             var vert = Input.GetAxis("Vertical");
             _isSitting = vert < 0.0f && _rb.velocity.y == 0.0f;
-            Move();
             if (_isSitting && !isJumping)
             {
                 _rb.velocity = Vector2.zero;

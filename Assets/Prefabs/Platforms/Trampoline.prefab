@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32cb04ff7d24ba89f5d0015282cc4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trampolineForce: 112
+  trampolineForce: 104
   platformType: 3
   trampolineOnWait: {fileID: -636970747, guid: 663a48dd2aa42b84189c4d3536fa1cca, type: 3}
   trampolineLaunch: {fileID: -835989675, guid: 663a48dd2aa42b84189c4d3536fa1cca, type: 3}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e09d82014347a1ab77c1584df52fd5, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  diamondsOnLevel: 80
-  diamondsCollected: 4
-  scores: 148300
-  currentLevel: 2
+  diamondsOnLevel: 0
+  diamondsCollected: 0
+  scores: 0
+  currentLevel: 1
   hasDiamondUpdate: 0
   hasScoresUpdate: 0
   hasLevelUpdate: 1
