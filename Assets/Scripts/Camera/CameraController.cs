@@ -24,6 +24,9 @@ namespace Camera
 
         private int _offsetX;
         private int _screenNumber = 0;
+        
+        private float _shakeTime;
+        private bool _canShake;
 
         private void Start()
         {
@@ -50,6 +53,11 @@ namespace Camera
                 z
             );
             ui.transform.position = pos;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_canShake) Shake();
         }
 
         private Rect GetCameraRect()
@@ -90,24 +98,20 @@ namespace Camera
         public void CameraShake(Rect srcRect)
         {
             var rect = GetCameraRect();
-            if (rect.Overlaps(srcRect))
-            {
-                StartCoroutine(LaunchShake());
-            }
-        }
-        private IEnumerator LaunchShake()
-        {
+            if (!rect.Overlaps(srcRect)) return;
             shakeSound.Play();
-            var time = 0.5f;
-            while (time >= 0.0f)
-            {
-                _cameraOffset = Random.insideUnitCircle * 16;
-                yield return null;
-                time -= Time.deltaTime;
-            }
+            _canShake = true;
+        }
 
+        private void Shake()
+        {
+            if (!_canShake && _shakeTime == 0.0f) return;
+            _cameraOffset = Random.insideUnitCircle * 16.0f;
+            _shakeTime += Time.unscaledDeltaTime;
+            if (_shakeTime <= 0.3f) return;
             _cameraOffset = Vector3.zero;
-            yield return null;
+            _shakeTime = _cameraOffset.x;
+            _canShake = false;
         }
     }
 }
