@@ -82,6 +82,7 @@ namespace Game
                 .OrderBy(pos => pos.y).ToList();
             _respawnPointsList.Remove(respawnPoints.transform.position);
             respawnPoints.SetActive(false);
+            Debug.Log(string.Join(" | ",_respawnPointsList));
         }
 
         private void FindTeleports()
@@ -93,11 +94,20 @@ namespace Game
                 teleports.First(o => o.gameObject.name.Contains("exit", StringComparison.OrdinalIgnoreCase));
         }
 
-        public Vector3 GetRespawnPosition(Vector3 heroDeathPosition)
+        public Vector3 GetRespawnPosition(Vector3 maxHeroPosition)
         {
             //  TODO если смерть будет после проходе нексольких чекпоинтов то респаун будет с первого. попраить.
             if (_respawnPointsList.Count == 1) return _respawnPointsList[0];
-            if (heroDeathPosition.y > _respawnPointsList[1].y) _respawnPointsList.RemoveAt(0);
+
+            var count = _respawnPointsList.Count;
+
+            while (--count >= 0)
+            {
+                if (maxHeroPosition.y > _respawnPointsList[count].y) break;
+            }
+            
+            _respawnPointsList.RemoveRange(0,count);
+            // if (maxHeroPositoin.y > _respawnPointsList[1].y) _respawnPointsList.RemoveAt(0);
             return _respawnPointsList[0];
         }
 

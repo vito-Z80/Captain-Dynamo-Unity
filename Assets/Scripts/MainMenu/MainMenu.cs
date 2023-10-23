@@ -24,7 +24,7 @@ namespace MainMenu
         private int _flashCount;
         private void FixedUpdate()
         {
-            if (Input.anyKey)
+            if (Input.anyKeyDown)
             {
                 gameData.Reset();
                 SceneManager.LoadScene("Scenes/LevelTransition");

@@ -17,12 +17,12 @@ namespace Game.LevelTransition
             var count = 0;
             while (count < fingers.Length)
             {
-                if (Input.anyKey) break;
+                if (Input.anyKeyDown) break;
                 yield return new WaitForSeconds(1f);
                 fingersSpriteRenderer.sprite = fingers[count];
                 count++;
             }
-            if (!Input.anyKey) yield return new WaitForSeconds(1f);
+            if (!Input.anyKeyDown) yield return new WaitForSeconds(1f);
             done.Invoke();
         }
     }

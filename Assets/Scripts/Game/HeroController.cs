@@ -26,9 +26,12 @@ namespace Game
 
 
         private const float JumpForce = 50f;
+
         private Vector2 _additionalSpeedFactor = Vector2.zero;
-        private Vector3 _afterDeadPosition = Vector3.zero; //  позиция достигнув которою труп игрока вызывает respawn
-        private Vector3 _deathPosition = Vector3.zero; //  позиция смерти для определения респавна.
+        // private Vector3 _afterDeadPosition = Vector3.zero; //  позиция достигнув которою труп игрока вызывает respawn
+        // private Vector3 _deathPosition = Vector3.zero; //  позиция смерти для определения респавна.
+
+        private Vector3 maxHeroPosition;
 
 
         private readonly HeroHandler _heroHandler = new HeroHandler();
@@ -55,18 +58,14 @@ namespace Game
             _sitCollider = new Bounds(new Vector3(0.0f, -2.5f, 0.0f), new Vector3(7.0f, 11.0f, 0.0f));
             SetStayCollider();
             assignedSpeed = speed;
+            maxHeroPosition = Vector3.zero + Vector3.down * 2048.0f;
         }
 
         private void Update()
         {
-            if (_isDead || !isActive)
-            {
-                if (transform.position.y < _afterDeadPosition.y)
-                {
-                    Respawn();
-                }
-                return;
-            }
+            Animation();
+            Respawn();
+            if (_isDead || !isActive) return;
             Move();
             ControlledJump(JumpForce);
             var vert = Input.GetAxis("Vertical");
@@ -81,7 +80,8 @@ namespace Game
                 SetStayCollider();
             }
 
-            Animation();
+            var heroPos = transform.position;
+            maxHeroPosition = new Vector3(heroPos.x, Mathf.Max(heroPos.y, maxHeroPosition.y), heroPos.z);
         }
 
         private void SetSitCollider()
@@ -145,9 +145,9 @@ namespace Game
         {
             if (_onZipline) return;
             direction = Input.GetAxis("Horizontal");
-            if (_isSitting && direction != 0.0f) _isSitting = false;   // Если сидел то может пойти из этого положения
-           
-            var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed;   //  В прыжке уменьшить горизонтальное перемещение.
+            if (_isSitting && direction != 0.0f) _isSitting = false; // Если сидел то может пойти из этого положения
+
+            var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed; //  В прыжке уменьшить горизонтальное перемещение.
             _rb.velocity = new Vector2(actualSpeed * direction, _rb.velocity.y) + _additionalSpeedFactor;
         }
 
@@ -191,13 +191,13 @@ namespace Game
             Jump(64.0f);
             cam.isBlocked = true;
             _animationState = AnimationState.Dead;
-            animationSprite.SetState(_animationState);
-            _deathPosition = transform.position;
-            _afterDeadPosition = _deathPosition + Vector3.down * (cam.ppc.refResolutionY / 2f);
+            // _deathPosition = transform.position;
+            // _afterDeadPosition = _deathPosition + Vector3.down * (cam.ppc.refResolutionY / 2f);
         }
 
         private void Respawn()
         {
+            if (transform.position.y > cam.transform.position.y - cam.ppc.refResolutionY) return;
             _rb.velocity = Vector2.zero;
             _animationState = AnimationState.Idle;
             _isDead = false;
@@ -206,7 +206,7 @@ namespace Game
             cam.isBlocked = false;
             cam.horizontal = false;
             cam.vertical = true;
-            transform.position = levelController.GetRespawnPosition(_deathPosition);
+            transform.position = levelController.GetRespawnPosition(maxHeroPosition);
             cam.transform.position = Vector3.back * 10.0f + Vector3.up * transform.position.y;
         }
 
