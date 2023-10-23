@@ -128,9 +128,11 @@ namespace Game
             _bc.size = _stayCollider.size;
         }
 
-        public void SetPosition(Vector3 position)
+        public void SetStayPosition(Vector3 position)
         {
             transform.position = position;
+            direction = 0.0f;
+            _animationState = AnimationState.Idle;
         }
 
         private void ControlledJump(float jumpForce)
@@ -191,8 +193,7 @@ namespace Game
             Jump(64.0f);
             cam.isBlocked = true;
             _animationState = AnimationState.Dead;
-            // _deathPosition = transform.position;
-            // _afterDeadPosition = _deathPosition + Vector3.down * (cam.ppc.refResolutionY / 2f);
+            direction = 0;
         }
 
         private void Respawn()
@@ -200,6 +201,7 @@ namespace Game
             if (transform.position.y > cam.transform.position.y - cam.ppc.refResolutionY) return;
             _rb.velocity = Vector2.zero;
             _animationState = AnimationState.Idle;
+            direction = 0;
             _isDead = false;
             isJumping = false;
             _bc.enabled = true;

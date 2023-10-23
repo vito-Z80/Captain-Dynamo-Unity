@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
+using Camera;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.U2D;
 
 namespace Game.Enemies
 {
@@ -29,6 +29,9 @@ namespace Game.Enemies
         private Vector3 _idlePosition;
 
         private bool isGoesBack = false;
+
+        private UnityEngine.Camera _camera;
+        private CameraController _cameraController;
 
         private void Start()
         {
@@ -58,6 +61,9 @@ namespace Game.Enemies
                 position.z
             );
             shaftMask.SetActive(true);
+
+            _camera = UnityEngine.Camera.main;
+            _cameraController = _camera.GetComponent<CameraController>();
         }
 
 
@@ -132,6 +138,11 @@ namespace Game.Enemies
         {
             if (other.CompareTag(Define.Ground) || other.CompareTag(Define.Deadly))
             {
+                var rect = new Rect(
+                    _boxCollider2D.bounds.min,
+                    _boxCollider2D.bounds.size
+                );
+                _cameraController.CameraShake(rect);
                 _direction = _direction == HorizontalDirection.Left
                     ? HorizontalDirection.Right
                     : HorizontalDirection.Left;

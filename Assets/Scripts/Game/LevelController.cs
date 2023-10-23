@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Platforms;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using AnimationState = Animations.AnimationState;
 
 namespace Game
@@ -46,10 +44,8 @@ namespace Game
             _heroController ??= FindObjectOfType<HeroController>(true);
             _heroController.gameObject.SetActive(false);
             _heroController.levelController = this;
-            _heroController.SetPosition(teleportController.startTeleport.transform.position + Vector3.up * 16.0f);
             teleportController.StartLevel(_heroController);
             gameData.diamondsOnLevel = GetDiamondsOnLevel();
-            
         }
 
         public void RestoreZiplines()
@@ -59,18 +55,18 @@ namespace Game
                 zipline.RestorePosition();
             }
         }
-        
-        
+
+
         public void LevelCompleted()
         {
             _heroController.isActive = false;
             _heroController.animationSprite.SetState(AnimationState.Idle);
             _heroController._rb.velocity = Vector3.zero;
-            _heroController.SetPosition(teleportController.finishTeleport.transform.position + Vector3.up * 16.0f);
+            _heroController.SetStayPosition(teleportController.finishTeleport.transform.position + Vector3.up * 16.0f);
             teleportController.FinishLevel(_heroController);
         }
 
-        
+
         private void FindZiplines()
         {
             _ziplines = platforms.GetComponentsInChildren<Zipline>();
@@ -82,7 +78,6 @@ namespace Game
                 .OrderBy(pos => pos.y).ToList();
             _respawnPointsList.Remove(respawnPoints.transform.position);
             respawnPoints.SetActive(false);
-            Debug.Log(string.Join(" | ",_respawnPointsList));
         }
 
         private void FindTeleports()
@@ -105,8 +100,8 @@ namespace Game
             {
                 if (maxHeroPosition.y > _respawnPointsList[count].y) break;
             }
-            
-            _respawnPointsList.RemoveRange(0,count);
+
+            _respawnPointsList.RemoveRange(0, count);
             // if (maxHeroPositoin.y > _respawnPointsList[1].y) _respawnPointsList.RemoveAt(0);
             return _respawnPointsList[0];
         }
@@ -115,7 +110,6 @@ namespace Game
         private int GetDiamondsOnLevel()
         {
             var count = GetComponentsInChildren<Transform>().Count(o => o.name.Contains(Define.Diamond));
-            Debug.Log("Diamonds on level:" + count);
             return count;
         }
     }

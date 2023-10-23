@@ -38,7 +38,6 @@ namespace Game
             // data.Reset();
             data.currentLevel = levelNumber;
             var levelName = LevelPrefPath + levelNumber;
-            Debug.Log(levelName);
             var levelPref = Resources.Load<GameObject>(levelName);
             levelController = Instantiate(levelPref).GetComponent<LevelController>();
         }

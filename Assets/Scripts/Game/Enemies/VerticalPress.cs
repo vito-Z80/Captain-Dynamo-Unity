@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Camera;
+using UnityEngine;
 
 namespace Game.Enemies
 {
@@ -8,17 +9,24 @@ namespace Game.Enemies
         public float climbForce;
 
         private Rigidbody2D _rigidbody2D;
+        private BoxCollider2D _boxCollider2D;
         private Vector3 _topPosition;
 
         private float _startTime;
+        
+        private UnityEngine.Camera _camera;
+        private CameraController _cameraController;
 
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            _boxCollider2D = GetComponent<BoxCollider2D>();
             _rigidbody2D.gravityScale = gravityScale;
             _rigidbody2D.sleepMode = RigidbodySleepMode2D.StartAsleep;
             _topPosition = transform.position;
             _startTime = Random.value * 2.0f;
+            _camera = UnityEngine.Camera.main;
+            _cameraController = _camera.GetComponent<CameraController>();
         }
 
 
@@ -39,6 +47,11 @@ namespace Game.Enemies
 
         private void OnCollisionEnter2D(Collision2D other)
         {
+            var rect = new Rect(
+                _boxCollider2D.bounds.min,
+                _boxCollider2D.bounds.size
+            );
+            _cameraController.CameraShake(rect);
             _rigidbody2D.gravityScale = 0.0f;
             _rigidbody2D.velocity = Vector2.up * (climbForce * 60.0f);
         }
