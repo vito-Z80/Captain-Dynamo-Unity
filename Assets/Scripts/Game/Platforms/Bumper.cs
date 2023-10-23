@@ -6,6 +6,7 @@ namespace Game.Platforms
 {
     public class Bumper : MonoBehaviour
     {
+        public AudioSource bumpSound;
         public Sprite bumperOffSprite;
         public Sprite bumperOnSprite;
         public float bounceForce = 100f;
@@ -28,6 +29,7 @@ namespace Game.Platforms
 
         private IEnumerator ActiveState(Collision2D collision)
         {
+            bumpSound.Play();
             SetSprite(bumperOnSprite);
             var hc = collision.gameObject.GetComponent<HeroController>();
             hc.isActive = false;
