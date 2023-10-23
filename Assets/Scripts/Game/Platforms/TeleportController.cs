@@ -16,9 +16,6 @@ namespace Game.Platforms
         public GameObject spriteLinePref;
         private readonly List<GameObject> _lines = new List<GameObject>();
 
-        public static event Action LevelCompleted;
-
-
         public GameData gameData;
 
 

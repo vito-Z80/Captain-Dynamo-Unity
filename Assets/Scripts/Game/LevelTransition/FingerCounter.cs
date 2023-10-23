@@ -10,19 +10,24 @@ namespace Game.LevelTransition
         public SpriteRenderer fingersSpriteRenderer;
 
 
-    
+        private void Start()
+        {
+            fingersSpriteRenderer.enabled = false;
+        }
+
 
         public IEnumerator Counter(Action done)
         {
+            yield return new WaitForSeconds(1f);
+            fingersSpriteRenderer.enabled = true;
             var count = 0;
             while (count < fingers.Length)
             {
-                if (Input.anyKeyDown) break;
-                yield return new WaitForSeconds(1f);
                 fingersSpriteRenderer.sprite = fingers[count];
+                yield return new WaitForSeconds(1f);
                 count++;
             }
-            if (!Input.anyKeyDown) yield return new WaitForSeconds(1f);
+
             done.Invoke();
         }
     }
