@@ -11,7 +11,7 @@ namespace Game
         public void OnTrigger(HeroController hero, Collider2D other)
         {
             
-            if (!hero.isActive) return;
+            if (!hero.IsActive()) return;
             if (other.gameObject.CompareTag(Define.Enemy))
             {
                 if (hero._rb.velocity.y < 0.0f && !other.name.Contains(Define.Shuriken))

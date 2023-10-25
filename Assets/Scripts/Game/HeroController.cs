@@ -1,6 +1,8 @@
-﻿using Animations;
+﻿using System;
+using Animations;
 using Camera;
 using Game.Actions;
+using Game.GameMenu;
 using UnityEngine;
 using AnimationState = Animations.AnimationState;
 
@@ -28,14 +30,13 @@ namespace Game
         private const float JumpForce = 50f;
 
         private Vector2 _additionalSpeedFactor = Vector2.zero;
-        // private Vector3 _afterDeadPosition = Vector3.zero; //  позиция достигнув которою труп игрока вызывает respawn
-        // private Vector3 _deathPosition = Vector3.zero; //  позиция смерти для определения респавна.
 
-        private Vector3 maxHeroPosition;
+        private Vector3 _maxHeroPosition;
 
 
         private readonly HeroHandler _heroHandler = new HeroHandler();
-        [HideInInspector] public bool isActive = false;
+
+        private bool _isActive = false;
 
         public CameraController cam;
         public LevelController levelController;
@@ -48,6 +49,8 @@ namespace Game
         private Bounds _sitCollider;
 
 
+        private HeroControlHandler _heroControlHandler;
+
         private void Start()
         {
             _animationState = AnimationState.Idle;
@@ -58,14 +61,19 @@ namespace Game
             _sitCollider = new Bounds(new Vector3(0.0f, -2.5f, 0.0f), new Vector3(7.0f, 11.0f, 0.0f));
             SetStayCollider();
             assignedSpeed = speed;
-            maxHeroPosition = Vector3.zero + Vector3.down * 2048.0f;
+            _maxHeroPosition = Vector3.zero + Vector3.down * 2048.0f;
+            _heroControlHandler = new HeroControlHandler(_rb, _bc);
         }
 
         private void Update()
         {
+            // var dir = _heroControlHandler.Update();
+            // Debug.Log(dir);
+            // return;
+
             Animation();
             Respawn();
-            if (_isDead || !isActive) return;
+            if (_isDead || !_isActive) return;
             Move();
             ControlledJump(JumpForce);
             var vert = Input.GetAxis("Vertical");
@@ -81,7 +89,7 @@ namespace Game
             }
 
             var heroPos = transform.position;
-            maxHeroPosition = new Vector3(heroPos.x, Mathf.Max(heroPos.y, maxHeroPosition.y), heroPos.z);
+            _maxHeroPosition = new Vector3(heroPos.x, Mathf.Max(heroPos.y, _maxHeroPosition.y), heroPos.z);
         }
 
         private void SetSitCollider()
@@ -194,6 +202,7 @@ namespace Game
             cam.isBlocked = true;
             _animationState = AnimationState.Dead;
             direction = 0;
+            levelController.gameData.deadCount++;
         }
 
         private void Respawn()
@@ -208,10 +217,18 @@ namespace Game
             cam.isBlocked = false;
             cam.horizontal = false;
             cam.vertical = true;
-            transform.position = levelController.GetRespawnPosition(maxHeroPosition);
+            transform.position = levelController.GetRespawnPosition(_maxHeroPosition);
             cam.transform.position = Vector3.back * 10.0f + Vector3.up * transform.position.y;
         }
 
+        public void ActiveState(bool isActivate)
+        {
+            _rb.simulated = isActivate;
+            _bc.enabled = isActivate;
+            _isActive = isActivate;
+        }
+
+        public bool IsActive() => _isActive;
 
         private void OnCollisionEnter2D(Collision2D collision)
         {

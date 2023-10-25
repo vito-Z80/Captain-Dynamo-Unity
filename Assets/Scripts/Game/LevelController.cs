@@ -26,8 +26,7 @@ namespace Game
         private List<Vector3> _respawnPointsList = new List<Vector3>();
         private Zipline[] _ziplines;
 
-
-        private HeroController _heroController;
+        [HideInInspector]public HeroController heroController;
 
         private void Start()
         {
@@ -41,10 +40,10 @@ namespace Game
             FindRespawnPoints();
             FindTeleports();
             FindZiplines();
-            _heroController ??= FindObjectOfType<HeroController>(true);
-            _heroController.gameObject.SetActive(false);
-            _heroController.levelController = this;
-            teleportController.StartLevel(_heroController);
+            heroController ??= FindObjectOfType<HeroController>(true);
+            heroController.gameObject.SetActive(false);
+            heroController.levelController = this;
+            teleportController.StartLevel(heroController);
             gameData.diamondsOnLevel = GetDiamondsOnLevel();
         }
 
@@ -59,11 +58,11 @@ namespace Game
 
         public void LevelCompleted()
         {
-            _heroController.isActive = false;
-            _heroController.animationSprite.SetState(AnimationState.Idle);
-            _heroController._rb.velocity = Vector3.zero;
-            _heroController.SetStayPosition(teleportController.finishTeleport.transform.position + Vector3.up * 16.0f);
-            teleportController.FinishLevel(_heroController);
+            heroController.ActiveState(false);
+            heroController.animationSprite.SetState(AnimationState.Idle);
+            heroController._rb.velocity = Vector3.zero;
+            heroController.SetStayPosition(teleportController.finishTeleport.transform.position + Vector3.up * 16.0f);
+            teleportController.FinishLevel(heroController);
         }
 
 

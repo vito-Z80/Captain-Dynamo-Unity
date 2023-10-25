@@ -1,5 +1,4 @@
-﻿using System;
-using Camera;
+﻿using Game.GameMenu;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -9,33 +8,47 @@ namespace Game
     {
         [HideInInspector] [CanBeNull] public LevelController levelController = null;
 
-        public bool debugLevel;
 
         public GameData data;
-        public CameraController cameraController;
 
+        public GameMenuController gameMenuController;
 
-        private AudioSource _audioSource;
+        [HideInInspector] public AudioSource gameMusic;
         private const string LevelPrefPath = "Level/Level_";
 
         private void Start()
         {
-            _audioSource = GetComponent<AudioSource>();
+            gameMenuController.gameObject.SetActive(false);
+            gameMusic = GetComponent<AudioSource>();
             NextLevel();
         }
 
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.M)) _audioSource.mute = !_audioSource.mute;
+            if (Input.GetKeyDown(KeyCode.Escape) && levelController is not null)
+            {
+                if (levelController is not null && levelController.heroController.IsActive())
+                    gameMenuController.ShowMenu(this);
+            }
+        }
+
+        public void ActivateHero()
+        {
+            levelController?.heroController.ActiveState(true);
+        }
+
+        public void DeactivateHero()
+        {
+            levelController?.heroController.ActiveState(false);
         }
 
         private void NextLevel()
         {
-            _audioSource.Play();
+            gameMusic.Play();
+            if (!data.isMusicPlayed) gameMusic.Pause();
             var levelNumber = data.currentLevel;
             if (levelController is not null) Destroy(levelController.gameObject);
-            // data.Reset();
             data.currentLevel = levelNumber;
             var levelName = LevelPrefPath + levelNumber;
             var levelPref = Resources.Load<GameObject>(levelName);

@@ -9,6 +9,8 @@ namespace Game
         public int diamondsCollected = 0;
         public int scores = 0;
         public int currentLevel = 0;
+        public int deadCount = 0;
+        public bool isMusicPlayed = true;
 
         public bool hasDiamondUpdate = true;
         public bool hasScoresUpdate = true;
@@ -20,6 +22,7 @@ namespace Game
             diamondsCollected = 0;
             scores = 0;
             currentLevel = 1;
+            deadCount = 0;
             hasScoresUpdate = false;
             hasDiamondUpdate = false;
             hasLevelUpdate = false;
