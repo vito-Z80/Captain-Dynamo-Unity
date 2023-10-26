@@ -11,6 +11,7 @@ namespace Game
         public int currentLevel = 0;
         public int deadCount = 0;
         public bool isMusicPlayed = true;
+        public bool isGameMenuShowing = false;
 
         public bool hasDiamondUpdate = true;
         public bool hasScoresUpdate = true;
@@ -26,6 +27,7 @@ namespace Game
             hasScoresUpdate = false;
             hasDiamondUpdate = false;
             hasLevelUpdate = false;
+            isGameMenuShowing = false;
         }
 
         public void CollectScores(int itemScores)

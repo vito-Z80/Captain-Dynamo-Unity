@@ -7,7 +7,8 @@ namespace Game.GameMenu
 {
     public class GameMenuController : MonoBehaviour
     {
-        private GameController _gameController;
+    
+        [HideInInspector] public GameController gameController;
         public UnityEngine.UI.Text onOffLabel;
         public UnityEngine.UI.Text toMainMenuLabel;
         public UnityEngine.UI.Text backLabel;
@@ -19,7 +20,8 @@ namespace Game.GameMenu
 
         private int _vertPress = 0;
         private int _firePress = 0;
-
+        private int _keyPressed = 0;
+        
         private int _selectorIndex = 0;
 
         private UnityEngine.UI.Text[] _labels;
@@ -27,14 +29,33 @@ namespace Game.GameMenu
         private void Awake()
         {
             _labels = new[] { onOffLabel, toMainMenuLabel, backLabel };
-            if (_gameController.gameMusic.isPlaying) onOffLabel.text = MOn;
+        }
+
+        private void Start()
+        {
+            if (gameController.gameMusic.isPlaying) onOffLabel.text = MOn;
             else onOffLabel.text = MOff;
+            _selectorIndex = _labels.Length - 1;
+            SetSelector(_selectorIndex);
+        }
+
+        private void OnEnable()
+        {
+            // _keyPressed = 0;
+            // _selectorIndex = _labels.Length - 1;
+            // SetSelector(_selectorIndex);
         }
 
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) CloseMenu();
+            // var key = Input.GetAxis("Options");
+            // var pressed = (int)(key > 0.0f ? 1.0f : key < 0.0f ? -1.0f : 0.0f);
+            // if (pressed > 0 && pressed != _keyPressed)
+            // {
+            //     CloseMenu();
+            // }
+            // _keyPressed = pressed;
         }
 
         private void FixedUpdate()
@@ -43,18 +64,17 @@ namespace Game.GameMenu
             Select();
         }
 
-        public void ShowMenu(GameController gameController)
-        {
-            _gameController = gameController;
-            gameObject.SetActive(true);
-            _selectorIndex = _labels.Length - 1;
-            SetSelector(_selectorIndex);
-            _gameController.levelController.heroController.gameObject.SetActive(false);
-        }
+        // public void ShowMenu(GameController gameController)
+        // {
+        //     this.gameController.levelController.heroController.gameObject.SetActive(false);
+        //     gameObject.SetActive(true);
+        //     _selectorIndex = _labels.Length - 1;
+        //     SetSelector(_selectorIndex);
+        // }
 
         private void Select()
         {
-            var fire = Input.GetAxis("Jump");
+            var fire = Input.GetAxis("Select");
             var pressed = (int)(fire > 0.0f ? 1.0f : fire < 0.0f ? -1.0f : 0.0f);
             if (pressed > 0 && pressed != _firePress)
             {
@@ -98,16 +118,16 @@ namespace Game.GameMenu
         public void ChangeMusicState()
         {
             var tm = _labels.First(mesh => mesh.name.Contains("off", StringComparison.OrdinalIgnoreCase));
-            if (_gameController.gameMusic.isPlaying)
+            if (gameController.gameMusic.isPlaying)
             {
-                _gameController.data.isMusicPlayed = false;
-                _gameController.gameMusic.Pause();
+                gameController.data.isMusicPlayed = false;
+                gameController.gameMusic.Pause();
                 tm.text = MOff;
             }
             else
             {
-                _gameController.data.isMusicPlayed = true;
-                _gameController.gameMusic.UnPause();
+                gameController.data.isMusicPlayed = true;
+                gameController.gameMusic.UnPause();
                 tm.text = MOn;
             }
         }
@@ -115,7 +135,7 @@ namespace Game.GameMenu
         public void CloseMenu()
         {
             gameObject.SetActive(false);
-            _gameController.levelController.heroController.gameObject.SetActive(true);
+            gameController.levelController.heroController.gameObject.SetActive(true);
         }
     }
 }

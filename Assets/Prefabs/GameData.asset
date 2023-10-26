@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e09d82014347a1ab77c1584df52fd5, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  diamondsOnLevel: 0
-  diamondsCollected: 0
-  scores: 0
+  diamondsOnLevel: 80
+  diamondsCollected: 25
+  scores: 3500
   currentLevel: 1
+  deadCount: 1
+  isMusicPlayed: 0
+  isGameMenuShowing: 0
   hasDiamondUpdate: 0
   hasScoresUpdate: 0
-  hasLevelUpdate: 1
+  hasLevelUpdate: 0

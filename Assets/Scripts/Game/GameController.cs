@@ -16,9 +16,12 @@ namespace Game
         [HideInInspector] public AudioSource gameMusic;
         private const string LevelPrefPath = "Level/Level_";
 
+        private int _keyPressed = 0;
+
         private void Start()
         {
             gameMenuController.gameObject.SetActive(false);
+            gameMenuController.gameController = this;
             gameMusic = GetComponent<AudioSource>();
             NextLevel();
         }
@@ -26,21 +29,17 @@ namespace Game
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && levelController is not null)
+            var key = Input.GetAxis("Options");
+            var pressed = (int)(key > 0.0f ? 1.0f : key < 0.0f ? -1.0f : 0.0f);
+            if (pressed > 0 && pressed != _keyPressed)
             {
                 if (levelController is not null && levelController.heroController.IsActive())
-                    gameMenuController.ShowMenu(this);
+                {
+                    gameMenuController.gameObject.SetActive(!gameMenuController.gameObject.activeSelf);
+                    levelController.heroController.gameObject.SetActive(!gameMenuController.gameObject.activeSelf);
+                }
             }
-        }
-
-        public void ActivateHero()
-        {
-            levelController?.heroController.ActiveState(true);
-        }
-
-        public void DeactivateHero()
-        {
-            levelController?.heroController.ActiveState(false);
+            _keyPressed = pressed;
         }
 
         private void NextLevel()

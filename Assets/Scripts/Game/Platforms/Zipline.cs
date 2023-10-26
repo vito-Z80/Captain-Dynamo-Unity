@@ -33,6 +33,7 @@ namespace Game.Platforms
             if (_stuck)
             {
                 Move();
+                FlipX(_stuck.animationSprite);
                 _stuck.direction = direction;
                 GetOffMe();
             }
@@ -48,8 +49,7 @@ namespace Game.Platforms
 
         private void GetOffMe()
         {
-            var dir = Input.GetAxis("Vertical");
-            if (dir < 0.0f)
+            if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("Jump") > 0.0f)
             {
                 _hideColliderTime = 0.5f;
                 if (_stuck is not null && _stuck.gameObject.activeInHierarchy)

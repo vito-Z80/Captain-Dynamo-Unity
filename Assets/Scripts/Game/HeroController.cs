@@ -19,15 +19,16 @@ namespace Game
         [HideInInspector] public AnimationSprite animationSprite;
         [HideInInspector] public Rigidbody2D _rb;
         private BoxCollider2D _bc;
-        private AnimationState _animationState;
+        // private AnimationState _animationState;
         [HideInInspector] public bool isJumping = false;
         [HideInInspector] public float direction = 0.0f;
         private bool _onZipline = false;
         private bool _isDead = false;
-        private bool _isSitting = false;
+        // private bool _isSitting = false;
 
 
-        private const float JumpForce = 50f;
+        private const float HighJumpForce = 50f;
+        private const float LowJumpForce = 38f;
 
         private Vector2 _additionalSpeedFactor = Vector2.zero;
 
@@ -53,7 +54,6 @@ namespace Game
 
         private void Start()
         {
-            _animationState = AnimationState.Idle;
             _rb = GetComponent<Rigidbody2D>();
             _bc = GetComponent<BoxCollider2D>();
             animationSprite = GetComponent<AnimationSprite>();
@@ -62,32 +62,17 @@ namespace Game
             SetStayCollider();
             assignedSpeed = speed;
             _maxHeroPosition = Vector3.zero + Vector3.down * 2048.0f;
-            _heroControlHandler = new HeroControlHandler(_rb, _bc);
+            _heroControlHandler = new HeroControlHandler(_rb, animationSprite);
         }
 
         private void Update()
         {
-            // var dir = _heroControlHandler.Update();
-            // Debug.Log(dir);
-            // return;
-
-            Animation();
             Respawn();
             if (_isDead || !_isActive) return;
-            Move();
-            ControlledJump(JumpForce);
-            var vert = Input.GetAxis("Vertical");
-            _isSitting = vert < 0.0f && _rb.velocity.y == 0.0f;
-            if (_isSitting && !isJumping)
-            {
-                _rb.velocity = Vector2.zero;
-                SetSitCollider();
-            }
-            else
-            {
-                SetStayCollider();
-            }
-
+            var controller = _heroControlHandler.PollKeys();
+            MoveHero(controller);
+            JumpHero(controller);
+            _heroControlHandler.Animation(controller, _onZipline, _isDead);
             var heroPos = transform.position;
             _maxHeroPosition = new Vector3(heroPos.x, Mathf.Max(heroPos.y, _maxHeroPosition.y), heroPos.z);
         }
@@ -99,37 +84,6 @@ namespace Game
         }
 
 
-        private void Animation()
-        {
-            switch (direction)
-            {
-                case > 0.0f:
-                    animationSprite.FlipX(true);
-                    _animationState = AnimationState.Run;
-                    break;
-                case < 0.0f:
-                    animationSprite.FlipX(false);
-                    _animationState = AnimationState.Run;
-                    break;
-                case 0.0f:
-                    _animationState = AnimationState.Idle;
-
-
-                    break;
-            }
-
-            if (_isSitting) _animationState = AnimationState.Sit;
-            if (isJumping) _animationState = AnimationState.JumpUp;
-
-            if (_onZipline) _animationState = AnimationState.Zipline;
-            if (_isDead) _animationState = AnimationState.Dead;
-
-            if (animationSprite.animationState != _animationState)
-            {
-                animationSprite.SetState(_animationState);
-            }
-        }
-
         private void SetStayCollider()
         {
             _bc.offset = _stayCollider.center;
@@ -140,25 +94,31 @@ namespace Game
         {
             transform.position = position;
             direction = 0.0f;
-            _animationState = AnimationState.Idle;
+            animationSprite.SetState(AnimationState.Idle);
         }
 
-        private void ControlledJump(float jumpForce)
+        private void JumpHero(Vector3 controller)
         {
-            if (Input.GetAxis("Jump") > 0.0f && _rb.velocity.y == 0.0f)
+            if (controller.z > 0.0f && _rb.velocity.y == 0.0f && !_onZipline)
             {
-                Jump(jumpForce);
+                if (controller.y > 0.0f) Jump(HighJumpForce);
+                else Jump(LowJumpForce);
             }
         }
 
-        private void Move()
+        private void MoveHero(Vector3 controller)
         {
             if (_onZipline) return;
-            direction = Input.GetAxis("Horizontal");
-            if (_isSitting && direction != 0.0f) _isSitting = false; // Если сидел то может пойти из этого положения
+            if (controller.y < 0.0f)
+            {
+                _rb.velocity = Vector2.zero;
+                SetSitCollider();
+                return;
+            }
 
+            SetStayCollider();
             var actualSpeed = _rb.velocity.y != 0.0f ? 25.0f : speed; //  В прыжке уменьшить горизонтальное перемещение.
-            _rb.velocity = new Vector2(actualSpeed * direction, _rb.velocity.y) + _additionalSpeedFactor;
+            _rb.velocity = new Vector2(actualSpeed * controller.x, _rb.velocity.y) + _additionalSpeedFactor;
         }
 
         public void SetAdditionalSpeed(Vector2 additionalSpeedFactor)
@@ -200,7 +160,7 @@ namespace Game
             _bc.enabled = false;
             Jump(64.0f);
             cam.isBlocked = true;
-            _animationState = AnimationState.Dead;
+            animationSprite.SetState(AnimationState.Dead);
             direction = 0;
             levelController.gameData.deadCount++;
         }
@@ -209,7 +169,7 @@ namespace Game
         {
             if (transform.position.y > cam.transform.position.y - cam.ppc.refResolutionY) return;
             _rb.velocity = Vector2.zero;
-            _animationState = AnimationState.Idle;
+            // _animationState = AnimationState.Idle;
             direction = 0;
             _isDead = false;
             isJumping = false;
@@ -223,6 +183,7 @@ namespace Game
 
         public void ActiveState(bool isActivate)
         {
+            // isActivate ^= levelController.gameData.isGameMenuShowing;
             _rb.simulated = isActivate;
             _bc.enabled = isActivate;
             _isActive = isActivate;
