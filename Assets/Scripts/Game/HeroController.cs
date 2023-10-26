@@ -18,7 +18,9 @@ namespace Game
 
         [HideInInspector] public AnimationSprite animationSprite;
         [HideInInspector] public Rigidbody2D _rb;
+
         private BoxCollider2D _bc;
+
         // private AnimationState _animationState;
         [HideInInspector] public bool isJumping = false;
         [HideInInspector] public float direction = 0.0f;
@@ -99,6 +101,13 @@ namespace Game
 
         private void JumpHero(Vector3 controller)
         {
+            if (_rb.velocity.y == 0.0f && !_onZipline && Input.GetAxis("Jump2") > 0.0f)
+            {
+                Jump(HighJumpForce);
+                return;
+            }
+
+
             if (controller.z > 0.0f && _rb.velocity.y == 0.0f && !_onZipline)
             {
                 if (controller.y > 0.0f) Jump(HighJumpForce);
@@ -188,7 +197,7 @@ namespace Game
             _bc.enabled = isActivate;
             _isActive = isActivate;
         }
-        
+
         public void ZiplineFreeze(bool isActivate)
         {
             _isActive = isActivate;

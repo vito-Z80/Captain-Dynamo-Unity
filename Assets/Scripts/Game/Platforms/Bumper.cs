@@ -21,13 +21,13 @@ namespace Game.Platforms
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            StartCoroutine(ActiveState(collision));
+            StartCoroutine(BumperHandler(collision));
             var bounceDirection = (collision.gameObject.transform.position - transform.position).normalized;
             collision.rigidbody.velocity = bounceDirection * bounceForce;
         }
 
 
-        private IEnumerator ActiveState(Collision2D collision)
+        private IEnumerator BumperHandler(Collision2D collision)
         {
             bumpSound.Play();
             SetSprite(bumperOnSprite);
