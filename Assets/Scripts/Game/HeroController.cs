@@ -188,6 +188,11 @@ namespace Game
             _bc.enabled = isActivate;
             _isActive = isActivate;
         }
+        
+        public void ZiplineFreeze(bool isActivate)
+        {
+            _isActive = isActivate;
+        }
 
         public bool IsActive() => _isActive;
 

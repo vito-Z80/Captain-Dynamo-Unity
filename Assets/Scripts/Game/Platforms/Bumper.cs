@@ -32,9 +32,9 @@ namespace Game.Platforms
             bumpSound.Play();
             SetSprite(bumperOnSprite);
             var hc = collision.gameObject.GetComponent<HeroController>();
-            hc.ActiveState(false);
+            hc.ZiplineFreeze(false);
             yield return new WaitForSeconds(0.2f);
-            hc.ActiveState(true);
+            hc.ZiplineFreeze(true);
             SetSprite(bumperOffSprite);
             yield return null;
         }
