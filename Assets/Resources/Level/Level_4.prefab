@@ -1030,6 +1030,7 @@ MonoBehaviour:
   respawnPoints: {fileID: 7763712839061628767}
   teleportController: {fileID: 1621855833843393654}
   platforms: {fileID: 2845655130807944073}
+  heroController: {fileID: 0}
 --- !u!1 &434401433196611049
 GameObject:
   m_ObjectHideFlags: 0
@@ -33349,7 +33350,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1842613586204054788, guid: 60d9549e30793a541923708266faa939, type: 3}
       propertyPath: offset
-      value: 112
+      value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 2952539709978971642, guid: 60d9549e30793a541923708266faa939, type: 3}
       propertyPath: m_RootOrder
@@ -33357,7 +33358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2952539709978971642, guid: 60d9549e30793a541923708266faa939, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64
+      value: -56
       objectReference: {fileID: 0}
     - target: {fileID: 2952539709978971642, guid: 60d9549e30793a541923708266faa939, type: 3}
       propertyPath: m_LocalPosition.y

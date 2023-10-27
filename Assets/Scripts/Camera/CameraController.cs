@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.U2D;
-using Random = UnityEngine.Random;
 
 namespace Camera
 {
     public class CameraController : MonoBehaviour
     {
-        public GameObject ui;
-
         public float z;
         [SerializeField] public Transform trackingPoint;
         [SerializeField] public bool horizontal;
@@ -52,7 +47,6 @@ namespace Camera
                 Mathf.Round(transform.position.y),
                 z
             );
-            ui.transform.position = pos;
         }
 
         private void FixedUpdate()

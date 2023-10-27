@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   diamondsOnLevel: 80
-  diamondsCollected: 25
-  scores: 3500
+  diamondsCollected: 16
+  score: 2600
   currentLevel: 1
-  deadCount: 1
-  isMusicPlayed: 0
-  isGameMenuShowing: 0
-  hasDiamondUpdate: 0
-  hasScoresUpdate: 0
+  isMusicPlayed: 1
+  deaths: 3
+  lives: 0
+  gameMode: 0
+  hasDiamondUpdate: 1
+  hasScoresUpdate: 1
   hasLevelUpdate: 0

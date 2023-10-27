@@ -45,7 +45,7 @@ namespace Game.LevelTransition
                 yield return null;
             } else if (gameData.currentLevel >= 7)
             {
-                SceneManager.LoadScene("Scenes/MainMenu");
+                SceneManager.LoadScene("Scenes/Win");
             }
 
             yield return null;

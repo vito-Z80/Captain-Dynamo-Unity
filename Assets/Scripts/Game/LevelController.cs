@@ -26,7 +26,7 @@ namespace Game
         private List<Vector3> _respawnPointsList = new List<Vector3>();
         private Zipline[] _ziplines;
 
-        [HideInInspector]public HeroController heroController;
+        [HideInInspector] public HeroController heroController;
 
         private void Start()
         {
@@ -90,18 +90,14 @@ namespace Game
 
         public Vector3 GetRespawnPosition(Vector3 maxHeroPosition)
         {
-            //  TODO если смерть будет после проходе нексольких чекпоинтов то респаун будет с первого. попраить.
-            if (_respawnPointsList.Count == 1) return _respawnPointsList[0];
-
+            if (_respawnPointsList.Count == 1 || gameData.gameMode == GameMode.Classic) return _respawnPointsList[0];
             var count = _respawnPointsList.Count;
-
             while (--count >= 0)
             {
                 if (maxHeroPosition.y > _respawnPointsList[count].y) break;
             }
 
-            _respawnPointsList.RemoveRange(0, count);
-            // if (maxHeroPositoin.y > _respawnPointsList[1].y) _respawnPointsList.RemoveAt(0);
+            if (count >= 0) _respawnPointsList.RemoveRange(0, count);
             return _respawnPointsList[0];
         }
 

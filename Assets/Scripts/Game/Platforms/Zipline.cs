@@ -34,7 +34,6 @@ namespace Game.Platforms
             {
                 Move();
                 FlipX(_stuck.animationSprite);
-                _stuck.direction = direction;
                 GetOffMe();
             }
 

@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game
 {
     [CreateAssetMenu(fileName = "GameData", menuName = "Game/Game Data")]
     public class GameData : ScriptableObject
     {
+
         public int diamondsOnLevel = 0;
         public int diamondsCollected = 0;
-        public int scores = 0;
+        [FormerlySerializedAs("scores")] public int score = 0;
         public int currentLevel = 0;
-        public int deadCount = 0;
         public bool isMusicPlayed = true;
-        public bool isGameMenuShowing = false;
+        public int deaths = 0;
+        public int lives = 3;
+        public GameMode gameMode = GameMode.Modern;
 
         public bool hasDiamondUpdate = true;
         public bool hasScoresUpdate = true;
@@ -21,18 +24,18 @@ namespace Game
         {
             diamondsOnLevel = 0;
             diamondsCollected = 0;
-            scores = 0;
+            score = 0;
             currentLevel = 1;
-            deadCount = 0;
-            hasScoresUpdate = false;
-            hasDiamondUpdate = false;
+            deaths = 0;
+            lives = 3;
+            hasScoresUpdate = true;
+            hasDiamondUpdate = true;
             hasLevelUpdate = false;
-            isGameMenuShowing = false;
         }
 
         public void CollectScores(int itemScores)
         {
-            scores += itemScores;
+            score += itemScores;
             hasScoresUpdate = true;
         }
 

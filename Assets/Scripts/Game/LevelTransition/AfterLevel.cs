@@ -19,16 +19,6 @@ namespace Game.LevelTransition
         private const string D8 = "D8";
         private const string D2 = "D2";
 
-        private readonly Color[] _flash = new []
-        {
-            Color.blue, 
-            Color.red, 
-            Color.magenta, 
-            Color.green, 
-            Color.cyan, 
-            Color.yellow, 
-            Color.white, 
-        };
 
         private int _flashCount = 0;
         private float _flashTimer;
@@ -45,8 +35,8 @@ namespace Game.LevelTransition
         {
             if ((_flashTimer += Time.deltaTime) < 0.1f) return;
             _flashTimer = 0.0f;
-            perfectLabel.color = _flash[_flashCount++];
-            if (_flashCount < _flash.Length) return;
+            perfectLabel.color = Define.colors[_flashCount++];
+            if (_flashCount < Define.colors.Length) return;
             _flashCount = 0;
         }
 
@@ -60,7 +50,7 @@ namespace Game.LevelTransition
                 audioSource.Play();
                 yield return new WaitForSeconds(0.075f);
                 gameData.diamondsCollected--;
-                gameData.scores += DiamondPrice;
+                gameData.score += DiamondPrice;
                 PrintDiamonds();
                 PrintScore();
             }
@@ -70,7 +60,7 @@ namespace Game.LevelTransition
             {
                 perfectLabel.gameObject.SetActive(true);
                 yield return new WaitForSeconds(1f);
-                gameData.scores += PerfectBonus;
+                gameData.score += PerfectBonus;
                 PrintScore();
             }
             yield return new WaitForSeconds(3f);
@@ -80,7 +70,7 @@ namespace Game.LevelTransition
 
         private void PrintScore()
         {
-            score.text = gameData.scores.ToString(D8);
+            score.text = gameData.score.ToString(D8);
         }
 
         private void PrintDiamonds()

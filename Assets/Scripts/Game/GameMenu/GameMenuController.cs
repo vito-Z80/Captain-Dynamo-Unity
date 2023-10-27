@@ -20,7 +20,6 @@ namespace Game.GameMenu
 
         private int _vertPress = 0;
         private int _firePress = 0;
-        private int _keyPressed = 0;
         
         private int _selectorIndex = 0;
 

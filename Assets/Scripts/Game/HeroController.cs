@@ -4,6 +4,7 @@ using Camera;
 using Game.Actions;
 using Game.GameMenu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using AnimationState = Animations.AnimationState;
 
 namespace Game
@@ -21,12 +22,9 @@ namespace Game
 
         private BoxCollider2D _bc;
 
-        // private AnimationState _animationState;
         [HideInInspector] public bool isJumping = false;
-        [HideInInspector] public float direction = 0.0f;
         private bool _onZipline = false;
         private bool _isDead = false;
-        // private bool _isSitting = false;
 
 
         private const float HighJumpForce = 50f;
@@ -69,11 +67,14 @@ namespace Game
 
         private void Update()
         {
+            if (levelController is null) return;
             Respawn();
+            if (levelController.gameData.lives < 0)
+                SceneManager.LoadScene("Scenes/MainMenu");
             if (_isDead || !_isActive) return;
             var controller = _heroControlHandler.PollKeys();
             MoveHero(controller);
-            JumpHero(controller);
+            if (!isJumping) JumpHero(controller);
             _heroControlHandler.Animation(controller, _onZipline, _isDead);
             var heroPos = transform.position;
             _maxHeroPosition = new Vector3(heroPos.x, Mathf.Max(heroPos.y, _maxHeroPosition.y), heroPos.z);
@@ -95,7 +96,7 @@ namespace Game
         public void SetStayPosition(Vector3 position)
         {
             transform.position = position;
-            direction = 0.0f;
+            // direction = 0.0f;
             animationSprite.SetState(AnimationState.Idle);
         }
 
@@ -170,16 +171,19 @@ namespace Game
             Jump(64.0f);
             cam.isBlocked = true;
             animationSprite.SetState(AnimationState.Dead);
-            direction = 0;
-            levelController.gameData.deadCount++;
+            if (levelController.gameData.gameMode == GameMode.Classic)
+            {
+                levelController.gameData.lives--;
+            }
+
+            levelController.gameData.deaths++;
         }
 
         private void Respawn()
         {
             if (transform.position.y > cam.transform.position.y - cam.ppc.refResolutionY) return;
+            if (levelController.gameData.lives <= 0) SceneManager.LoadScene("Scenes/GameOver");
             _rb.velocity = Vector2.zero;
-            // _animationState = AnimationState.Idle;
-            direction = 0;
             _isDead = false;
             isJumping = false;
             _bc.enabled = true;
