@@ -15350,6 +15350,7 @@ MonoBehaviour:
   respawnPoints: {fileID: 7661757507591821490}
   teleportController: {fileID: 6302357313520819710}
   platforms: {fileID: 3408145511321965646}
+  heroController: {fileID: 0}
 --- !u!1 &5449003163574974938
 GameObject:
   m_ObjectHideFlags: 0
@@ -20660,6 +20661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FakeTeleport (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6962577133226842878, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23963,6 +23968,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FakeTeleport (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6962577133226842878, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25092,6 +25101,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FakeTeleport (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6962577133226842878, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25535,6 +25548,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FakeTeleport (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6962577133226842878, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25600,6 +25617,10 @@ PrefabInstance:
     - target: {fileID: 6458777190852741517, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
       propertyPath: m_Name
       value: FakeTeleport (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962577133226842878, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25888,6 +25909,10 @@ PrefabInstance:
     - target: {fileID: 6458777190852741517, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
       propertyPath: m_Name
       value: FakeTeleport (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962577133226842878, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29128,6 +29153,10 @@ PrefabInstance:
     - target: {fileID: 6458777190852741517, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
       propertyPath: m_Name
       value: FakeTeleport
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962577133226842878, guid: caaff49241e3a1a44a138b61e3e91008, type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

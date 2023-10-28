@@ -14,7 +14,7 @@ namespace MainMenu
         public GameObject selector;
 
 
-        private int _selectorId = 2;
+        private int _selectorId = 1;
         private int _preDirection = 0;
 
 
@@ -54,10 +54,10 @@ namespace MainMenu
 
         public void ExitEvent()
         {
-            Application.Quit();
+            if (Application.platform == RuntimePlatform.WindowsPlayer) Application.Quit();
         }
 
-        public void DifficultyEvent()
+        public void GameModeEvent()
         {
             gameData.gameMode = gameData.gameMode == GameMode.Classic ? GameMode.Modern : GameMode.Classic;
             labels[_selectorId].text = gameData.gameMode.ToString();
